@@ -4,7 +4,6 @@ export const SITE = {
   title: 'Travelog',
   owner: 'Rowllah',
   tagline: 'Every trip I have taken — itineraries, real budgets and the places worth your time.',
-  bio: 'I can code, swim, read and travel — but nothing gives me the happiness of doing a little good!',
   instagram: 'rowllahbasheer',
   github: { user: 'rowllah', repo: 'Travelog', branch: 'main' },
 };
