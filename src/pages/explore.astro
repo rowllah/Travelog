@@ -2,9 +2,9 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Money from '../components/Money.astro';
-import { url, sortTrips, tripYearLabel, PLACE_LABELS } from '../lib/site';
+import { url, detailedTrips, tripYearLabel, PLACE_LABELS } from '../lib/site';
 
-const trips = sortTrips(await getCollection('trips'));
+const trips = detailedTrips(await getCollection('trips'));
 const places = trips.flatMap((t) => t.data.places.map((p) => ({ ...p, trip: t })));
 const countries = [...new Set(trips.map((t) => t.data.country))].sort();
 const counts = Object.fromEntries(Object.keys(PLACE_LABELS).map((k) => [k, places.filter((p) => p.type === k).length]));

@@ -162,8 +162,10 @@ button.chip:hover { border-color: var(--teal); }
 
 /* Timeline */
 .timeline { display: grid; gap: 0.6rem; border-left: 2px solid var(--line); padding-left: 1.4rem; }
-.timeline a { display: flex; gap: 1rem; align-items: baseline; text-decoration: none; color: var(--ink); position: relative; }
-.timeline a::before { content: ''; position: absolute; left: -1.85rem; top: 0.45rem; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); border: 3px solid var(--bg); }
+.timeline > * { display: flex; gap: 1rem; align-items: baseline; text-decoration: none; color: var(--ink); position: relative; }
+.timeline > .timeline-stub { color: var(--muted); }
+.timeline > .timeline-stub::before { background: var(--line); }
+.timeline > *::before { content: ''; position: absolute; left: -1.85rem; top: 0.45rem; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); border: 3px solid var(--bg); }
 .timeline .year { font-family: var(--serif); font-weight: 700; color: var(--teal); min-width: 4.5rem; }
 
 /* Trip page */

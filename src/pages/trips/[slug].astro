@@ -4,11 +4,12 @@ import Base from '../../layouts/Base.astro';
 import Money from '../../components/Money.astro';
 import {
   url, tripDays, tripWhen, dayDate, splitTime, perPersonBudget, PLACE_LABELS, BUDGET_LABELS, GITHUB_REPO_URL, SITE, formatDate, type Trip,
+  hasDetails,
 } from '../../lib/site';
 import { buildRates, convert } from '../../lib/fx';
 
 export async function getStaticPaths() {
-  const trips = await getCollection('trips');
+  const trips = (await getCollection('trips')).filter(hasDetails);
   return trips.map((trip) => ({ params: { slug: trip.id }, props: { trip } }));
 }
 

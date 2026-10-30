@@ -2,12 +2,13 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import TripCard from '../components/TripCard.astro';
-import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate, shortName, shortYear, tripYearLabel } from '../lib/site';
+import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate, shortName, shortYear, tripYearLabel, hasDetails } from '../lib/site';
 
-const trips = sortTrips(await getCollection('trips'));
+const allTrips = sortTrips(await getCollection('trips'));
+const trips = allTrips.filter(hasDetails);
 const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
 
-const countries = new Set(trips.flatMap((t) => t.data.country.split(/\s*&\s*/)));
+const countries = new Set(allTrips.flatMap((t) => t.data.country.split(/\s*&\s*/)));
 const totalDays = trips.reduce((s, t) => s + tripDays(t), 0);
 const regions = [...new Set(trips.map((t) => t.data.region))].sort();
 const styles = [...new Set(trips.flatMap((t) => t.data.styles))].sort();
@@ -26,7 +27,7 @@ const diveTrips = trips.filter((t) => t.data.styles.some((s) => ['Diving', 'Snor
         {SITE.tagline} Pick any trip, then <a href={url('/plan')}>turn it into your own itinerary</a> with a live budget in your currency.
       </p>
       <div class="stats">
-        <div class="stat"><strong>{trips.length}</strong><span>trips</span></div>
+        <div class="stat"><strong>{allTrips.length}</strong><span>trips</span></div>
         <div class="stat"><strong>{countries.size}</strong><span>countries & territories</span></div>
         <div class="stat"><strong>{totalDays}</strong><span>days on the road</span></div>
         <div class="stat"><strong>{diveTrips.length}</strong><span>trips under water</span></div>
@@ -139,14 +140,23 @@ const diveTrips = trips.filter((t) => t.data.styles.some((s) => ['Diving', 'Snor
         <p class="muted">Every trip, newest first.</p>
         <div class="timeline">
           {
-            trips.map((t) => (
-              <a href={url(`/trips/${t.id}`)}>
-                <span class="year">{tripYearLabel(t, '—')}</span>
-                <span>
-                  {t.data.flag} <strong>{t.data.title}</strong> <span class="muted">· {tripMonth(t)}</span>
-                </span>
-              </a>
-            ))
+            allTrips.map((t) =>
+              hasDetails(t) ? (
+                <a href={url(`/trips/${t.id}`)}>
+                  <span class="year">{tripYearLabel(t, '—')}</span>
+                  <span>
+                    {t.data.flag} <strong>{t.data.title}</strong> <span class="muted">· {tripMonth(t)}</span>
+                  </span>
+                </a>
+              ) : (
+                <div class="timeline-stub">
+                  <span class="year">{tripYearLabel(t, '—')}</span>
+                  <span>
+                    {t.data.flag} <strong>{t.data.title}</strong> <span class="muted">· details coming soon</span>
+                  </span>
+                </div>
+              ),
+            )
           }
         </div>
       </div>

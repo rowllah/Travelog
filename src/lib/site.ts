@@ -52,7 +52,14 @@ const fmtDay = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short'
 const fmtFull = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const fmtWeekday = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
 
-const visitDates = (t: Trip) => t.data.visits.map((v) => new Date(`${v}-01T00:00:00Z`)).sort((a, b) => +a - +b);
+const visitDate = (v: string) => new Date(`${v.length === 4 ? `${v}-01` : v}-01T00:00:00Z`);
+const visitDates = (t: Trip) => t.data.visits.map(visitDate).sort((a, b) => +a - +b);
+const visitLabel = (v: string) => (v.length === 4 ? v : fmtMonth.format(visitDate(v)));
+
+/** Timeline-only trips: recorded by year or month, with no itinerary yet. */
+export function hasDetails(t: Trip) {
+  return t.data.days.length > 0;
+}
 
 /** The trip's start date, or its latest visit month. Used for sorting and years. */
 export function tripStart(t: Trip): Date | undefined {
@@ -70,7 +77,7 @@ export function tripYearLabel(t: Trip, empty = '') {
 
 export function tripWhen(t: Trip) {
   const { startDate, endDate } = t.data;
-  if (!startDate && t.data.visits.length) return visitDates(t).map((d) => fmtMonth.format(d)).join(' & ');
+  if (!startDate && t.data.visits.length) return [...t.data.visits].sort().map(visitLabel).join(' & ');
   if (!startDate) return 'Date not recorded';
   if (!endDate) return fmtFull.format(startDate);
   return `${fmtDay.format(startDate)} – ${fmtFull.format(endDate)}`;
@@ -100,6 +107,10 @@ export function formatDate(d: Date) {
 
 export function isUpcoming(t: Trip) {
   return t.data.upcoming || (!!t.data.startDate && +t.data.startDate > Date.now());
+}
+
+export function detailedTrips(trips: Trip[]) {
+  return sortTrips(trips).filter(hasDetails);
 }
 
 export function sortTrips(trips: Trip[]) {

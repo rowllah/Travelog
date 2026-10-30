@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { sortTrips, perPersonBudget, tripDays, FIXED_CATEGORIES, BUDGET_LABELS } from '../lib/site';
+import { detailedTrips, perPersonBudget, tripDays, FIXED_CATEGORIES, BUDGET_LABELS } from '../lib/site';
 
-const trips = sortTrips(await getCollection('trips'));
+const trips = detailedTrips(await getCollection('trips'));
 const data = trips.map((t) => ({
   id: t.id,
   title: t.data.title,

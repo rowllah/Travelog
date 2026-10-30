@@ -2,9 +2,9 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { CURRENCIES } from '../lib/fx';
-import { url, sortTrips } from '../lib/site';
+import { url, detailedTrips } from '../lib/site';
 
-const trips = sortTrips(await getCollection('trips'));
+const trips = detailedTrips(await getCollection('trips'));
 
 const lists: Record<string, string[]> = {
   'Documents & money': [

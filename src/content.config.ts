@@ -21,15 +21,15 @@ const trips = defineCollection({
     destinations: z.array(z.string()).default([]),
     startDate: z.coerce.date().optional(),
     endDate: z.coerce.date().optional(),
-    /** Months ("YYYY-MM") of repeat visits when exact dates weren't recorded. */
-    visits: z.array(z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/)).default([]),
+    /** Visits as "YYYY-MM" or "YYYY" when exact dates weren't recorded. */
+    visits: z.array(z.coerce.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/)).default([]),
     company: z.string().optional(),
     travellers: z.number().int().positive().default(1),
     styles: z.array(z.string()).default([]),
     localCurrency: z.string().length(3).default('INR'),
     cover: z.string().optional(),
     coverCredit: z.string().optional(),
-    summary: z.string(),
+    summary: z.string().default(''),
     highlights: z.array(z.string()).default([]),
     bestTime: z.string().optional(),
     rating: z.number().min(1).max(5).optional(),
