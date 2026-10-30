@@ -1,18 +1,22 @@
 :root {
-  --bg: #faf6ef;
+  /* Palette drawn from @rowllahbasheer: deep-sea blues, reef aqua, beach sand, sunset gold, terracotta, jungle green */
+  --bg: #f7f3ec;
   --surface: #ffffff;
-  --ink: #1c2a30;
-  --muted: #5f6f74;
-  --line: #e7dfd2;
-  --teal: #0f766e;
-  --teal-soft: #d8efe9;
-  --coral: #e2674a;
-  --sand: #f1e7d6;
-  --gold: #c99a2e;
-  --radius: 16px;
-  --shadow: 0 1px 2px rgb(28 42 48 / 6%), 0 8px 24px rgb(28 42 48 / 6%);
+  --ink: #0b2239;
+  --muted: #587083;
+  --line: #e4ded2;
+  --teal: #0a7ea4;
+  --teal-soft: #d6eef5;
+  --aqua: #4cc9e0;
+  --deep: #062a43;
+  --coral: #c8553d;
+  --sand: #efe6d6;
+  --gold: #e0a43a;
+  --jungle: #2f6b4f;
+  --radius: 18px;
+  --shadow: 0 1px 2px rgb(6 42 67 / 6%), 0 10px 28px rgb(6 42 67 / 8%);
   --serif: 'Fraunces', Georgia, serif;
-  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -61,12 +65,12 @@ p { margin: 0 0 1rem; }
 
 /* Buttons & form controls */
 .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.15rem; border-radius: 999px; background: var(--teal); color: #fff !important; text-decoration: none; font-weight: 600; border: 0; cursor: pointer; font: inherit; font-weight: 600; transition: transform 0.15s, background 0.15s; }
-.btn:hover { background: #0c5f59; transform: translateY(-1px); }
+.btn:hover { background: var(--deep); transform: translateY(-1px); }
 .btn-small { padding: 0.42rem 0.9rem; font-size: 0.88rem; }
 .btn-ghost { background: transparent; color: var(--ink) !important; border: 1px solid var(--line); }
 .btn-ghost:hover { background: var(--sand); }
 .btn-coral { background: var(--coral); }
-.btn-coral:hover { background: #c9553a; }
+.btn-coral:hover { background: #a8432f; }
 input, select, textarea { font: inherit; color: var(--ink); }
 .field { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
 .field input, .field select, .field textarea, .input { padding: 0.6rem 0.75rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-weight: 400; font-size: 0.95rem; color: var(--ink); }
@@ -87,7 +91,7 @@ button.chip:hover { border-color: var(--teal); }
 
 /* Hero */
 .hero { position: relative; padding: 4.5rem 0 3rem; overflow: hidden; }
-.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 85% 10%, var(--teal-soft), transparent 45%), radial-gradient(circle at 10% 90%, #fbe2d6, transparent 40%); z-index: -1; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 85% 10%, var(--teal-soft), transparent 45%), radial-gradient(circle at 10% 90%, #f6dccf, transparent 40%); z-index: -1; }
 .hero p.lead { font-size: 1.15rem; color: var(--muted); max-width: 640px; }
 .stats { display: flex; flex-wrap: wrap; gap: 2.2rem; margin-top: 2rem; }
 .stat strong { display: block; font-family: var(--serif); font-size: 2.2rem; color: var(--teal); line-height: 1; }
@@ -104,10 +108,54 @@ button.chip:hover { border-color: var(--teal); }
 .trip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
 .trip-card { display: flex; flex-direction: column; background: var(--surface); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
 .trip-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgb(28 42 48 / 14%); }
-.trip-card-media { position: relative; aspect-ratio: 16 / 10; background: linear-gradient(135deg, var(--teal), #5fb3a6) center / cover no-repeat; }
-.trip-flag { position: absolute; left: 0.9rem; bottom: -1.1rem; font-size: 1.6rem; width: 2.6rem; height: 2.6rem; display: grid; place-items: center; background: var(--surface); border-radius: 50%; box-shadow: var(--shadow); }
-.trip-card-media .badge { position: absolute; top: 0.8rem; right: 0.8rem; }
-.trip-card-body { padding: 1.6rem 1.2rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.trip-card-media { position: relative; aspect-ratio: 4 / 3; background: linear-gradient(160deg, var(--deep), var(--teal)) center / cover no-repeat; transition: background-size 0.4s; }
+.trip-card-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgb(6 42 67 / 85%)); }
+.trip-card-overlay { position: absolute; left: 1.1rem; right: 1.1rem; bottom: 0.9rem; z-index: 1; color: #fff; }
+.trip-card-overlay .eyebrow { color: rgb(255 255 255 / 85%); }
+.trip-card-overlay h3 { color: #fff; font-size: 1.3rem; text-shadow: 0 1px 12px rgb(0 0 0 / 30%); }
+.trip-card-media .badge { position: absolute; top: 0.8rem; right: 0.8rem; z-index: 1; }
+.trip-card-body { padding: 1rem 1.2rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+
+/* Ocean hero (home) */
+.ocean-hero { position: relative; color: #fff; padding: 5rem 0 6.5rem; background:
+  radial-gradient(ellipse at 70% -10%, rgb(76 201 224 / 45%), transparent 55%),
+  radial-gradient(ellipse at 15% 0%, rgb(255 255 255 / 12%), transparent 40%),
+  linear-gradient(180deg, var(--deep) 0%, #0a4a6e 60%, var(--teal) 100%); overflow: hidden; }
+.ocean-hero h1 { color: #fff; }
+.ocean-hero h1 em { color: var(--aqua); font-weight: 500; }
+.ocean-hero .eyebrow { color: var(--aqua); }
+.ocean-hero .lead { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: rgb(255 255 255 / 92%); max-width: 680px; }
+.ocean-hero .lead.small { font-family: var(--sans); font-style: normal; font-size: 1rem; color: rgb(255 255 255 / 75%); }
+.ocean-hero .lead a { color: #fff; }
+.ocean-hero .stat strong { color: var(--gold); }
+.ocean-hero .stat span { color: rgb(255 255 255 / 75%); }
+.wave { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 70px; fill: var(--bg); }
+
+/* Instagram-style highlights */
+.highlights-row { display: flex; gap: 1.1rem; overflow-x: auto; padding: 0.5rem 0 1.5rem; margin-top: -2.2rem; position: relative; z-index: 2; scrollbar-width: none; }
+.highlights-row::-webkit-scrollbar { display: none; }
+.highlight { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; text-decoration: none; color: var(--ink); flex: 0 0 auto; width: 86px; }
+.highlight-ring { padding: 3px; border-radius: 50%; background: conic-gradient(from 200deg, var(--aqua), var(--teal), var(--gold), var(--coral), var(--aqua)); transition: transform 0.2s; }
+.highlight:hover .highlight-ring { transform: scale(1.07); }
+.highlight-img { display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; border: 3px solid var(--bg); background: var(--teal-soft) center / cover; font-size: 1.8rem; }
+.highlight-label { font-size: 0.74rem; font-weight: 500; text-align: center; line-height: 1.2; }
+
+/* Deep-sea band */
+.deep-band { background: linear-gradient(180deg, var(--teal) 0%, var(--deep) 100%); color: #fff; padding: 3.5rem 0; margin: 1rem 0 0; }
+.deep-band h2, .deep-band .eyebrow { color: #fff; }
+.deep-band .eyebrow { color: var(--aqua); }
+.deep-band p { color: rgb(255 255 255 / 80%); }
+.btn-light { background: #fff; color: var(--deep) !important; }
+.btn-light:hover { background: var(--teal-soft); }
+.dive-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.9rem; }
+.dive-card { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--teal) center / cover; text-decoration: none; color: #fff; box-shadow: 0 10px 30px rgb(0 0 0 / 25%); transition: transform 0.2s; }
+.dive-card:hover { transform: translateY(-4px); }
+.dive-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(6 42 67 / 0%) 40%, rgb(6 42 67 / 90%)); }
+.dive-card span { position: absolute; left: 0.9rem; right: 0.9rem; bottom: 0.8rem; z-index: 1; font-weight: 700; font-size: 0.95rem; }
+.dive-card small { display: block; font-weight: 400; opacity: 0.8; }
+
+.ig-link { display: grid; place-items: center; color: var(--ink) !important; }
+.ig-link:hover { color: var(--coral) !important; }
 .trip-card-body h3 { margin: 0; }
 .trip-card-body p { margin: 0; font-size: 0.92rem; }
 .trip-card-budget { margin-top: auto !important; padding-top: 0.6rem; border-top: 1px dashed var(--line); font-weight: 600; }

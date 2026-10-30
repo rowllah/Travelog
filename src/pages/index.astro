@@ -2,37 +2,57 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import TripCard from '../components/TripCard.astro';
-import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate } from '../lib/site';
+import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate, shortName, shortYear } from '../lib/site';
 
 const trips = sortTrips(await getCollection('trips'));
 const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
 
 const countries = new Set(trips.flatMap((t) => t.data.country.split(/\s*&\s*/)));
 const totalDays = trips.reduce((s, t) => s + tripDays(t), 0);
-const places = trips.reduce((s, t) => s + t.data.places.length, 0);
 const regions = [...new Set(trips.map((t) => t.data.region))].sort();
 const styles = [...new Set(trips.flatMap((t) => t.data.styles))].sort();
 const companies = [...new Set(trips.map((t) => (t.data.company ?? '').split(/[ +(]/)[0]).filter(Boolean))].sort();
 const upcoming = trips.filter(isUpcoming);
 const past = trips.filter((t) => !isUpcoming(t));
+const diveTrips = trips.filter((t) => t.data.styles.some((s) => ['Diving', 'Snorkelling'].includes(s)));
 ---
 
 <Base>
-  <section class="hero">
+  <section class="ocean-hero">
     <div class="wrap">
-      <p class="eyebrow">A travel log & itinerary library</p>
-      <h1>Where I've been,<br />and how you can go too.</h1>
-      <p class="lead">
-        {SITE.tagline} Pick any trip, then <a href={url('/plan')}>turn it into your own itinerary</a> with a live budget in your
-        currency.
+      <p class="eyebrow">Travelog · @{SITE.instagram}</p>
+      <h1>Where I've been,<br /><em>and how you can go too.</em></h1>
+      <p class="lead">“{SITE.bio}”</p>
+      <p class="lead small">
+        {SITE.tagline} Pick any trip, then <a href={url('/plan')}>turn it into your own itinerary</a> with a live budget in your currency.
       </p>
       <div class="stats">
         <div class="stat"><strong>{trips.length}</strong><span>trips</span></div>
         <div class="stat"><strong>{countries.size}</strong><span>countries & territories</span></div>
         <div class="stat"><strong>{totalDays}</strong><span>days on the road</span></div>
-        <div class="stat"><strong>{places}</strong><span>hotels, eats & experiences</span></div>
+        <div class="stat"><strong>{diveTrips.length}</strong><span>trips under water</span></div>
       </div>
     </div>
+    <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,40 C240,90 480,0 720,30 C960,60 1200,10 1440,45 L1440,90 L0,90 Z" />
+    </svg>
+  </section>
+
+  <section class="wrap highlights-row" aria-label="Trip highlights">
+    {
+      trips.map((t) => (
+        <a class="highlight" href={url(`/trips/${t.id}`)}>
+          <span class="highlight-ring">
+            <span class="highlight-img" style={t.data.cover ? `background-image:url('${t.data.cover}')` : undefined}>
+              {!t.data.cover && t.data.flag}
+            </span>
+          </span>
+          <span class="highlight-label">
+            {shortName(t)} {shortYear(t)}
+          </span>
+        </a>
+      ))
+    }
   </section>
 
   {
@@ -85,6 +105,31 @@ const past = trips.filter((t) => !isUpcoming(t));
 
     <div class="trip-grid" id="trip-grid">
       {past.map((t) => <TripCard trip={t} />)}
+    </div>
+  </section>
+
+  <section class="deep-band">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Under the sea</p>
+          <h2>Where I've been diving</h2>
+          <p>From a first open-water course in Havelock to sharks at the Brothers in the Red Sea.</p>
+        </div>
+        <a class="btn btn-small btn-light" href={url('/explore?q=dive')}>All dive spots & operators →</a>
+      </div>
+      <div class="dive-strip">
+        {
+          diveTrips.map((t) => (
+            <a class="dive-card" href={url(`/trips/${t.id}`)} style={t.data.cover ? `background-image:url('${t.data.cover}')` : undefined}>
+              <span>
+                {t.data.flag} {shortName(t)}
+                <small>{t.data.startDate?.getUTCFullYear() ?? 'Anytime'}</small>
+              </span>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </section>
 

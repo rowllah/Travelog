@@ -112,7 +112,9 @@ const counts = Object.fromEntries(Object.keys(PLACE_LABELS).map((k) => [k, place
   const typeBtns = [...document.querySelectorAll<HTMLButtonElement>('#x-types button')];
   const toggles = ['x-fav', 'x-priced', 'x-tried', 'x-wish'].map((id) => document.getElementById(id) as HTMLButtonElement);
   const count = document.getElementById('x-count')!;
-  let type = new URLSearchParams(location.search).get('type') ?? '';
+  const params = new URLSearchParams(location.search);
+  let type = params.get('type') ?? '';
+  search.value = params.get('q') ?? '';
 
   const on = (b: HTMLButtonElement) => b.getAttribute('aria-pressed') === 'true';
 

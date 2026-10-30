@@ -4,6 +4,8 @@ export const SITE = {
   title: 'Travelog',
   owner: 'Rowllah',
   tagline: 'Every trip I have taken — itineraries, real budgets and the places worth your time.',
+  bio: 'I can code, swim, read and travel — but nothing gives me the happiness of doing a little good!',
+  instagram: 'rowllahbasheer',
   github: { user: 'rowllah', repo: 'Travelog', branch: 'main' },
 };
 
@@ -56,6 +58,14 @@ export function tripWhen(t: Trip) {
   if (!startDate) return 'Date not recorded';
   if (!endDate) return fmtFull.format(startDate);
   return `${fmtDay.format(startDate)} – ${fmtFull.format(endDate)}`;
+}
+
+export function shortName(t: Trip) {
+  return t.data.title.split(/\s+—\s+/)[0].replace(/ on a budget$/, '');
+}
+
+export function shortYear(t: Trip) {
+  return t.data.startDate ? `’${String(t.data.startDate.getUTCFullYear()).slice(2)}` : '';
 }
 
 export function tripMonth(t: Trip) {
