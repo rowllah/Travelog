@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# Original spreadsheets/PDFs contain PNRs, booking IDs and phone numbers — never publish them.
+source/

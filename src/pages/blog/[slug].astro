@@ -1,0 +1,43 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url, formatDate, GITHUB_REPO_URL, SITE } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const trip = post.data.trip ? await getEntry('trips', post.data.trip) : undefined;
+const cover = post.data.cover ?? trip?.data.cover;
+---
+
+<Base title={post.data.title} description={post.data.excerpt} image={cover}>
+  {cover && <div class="trip-hero" style={`min-height:320px;background-image:url('${cover}')`} />}
+  <article class="narrow section">
+    <p class="eyebrow">
+      {formatDate(post.data.date)}
+      {post.data.tags.length > 0 && ` · ${post.data.tags.join(' · ')}`}
+    </p>
+    <h1>{post.data.title}</h1>
+    {
+      trip && (
+        <p>
+          <a class="chip" href={url(`/trips/${trip.id}`)} style="text-decoration:none">
+            {trip.data.flag} Part of: {trip.data.title}
+          </a>
+        </p>
+      )
+    }
+    <div class="prose">
+      <Content />
+    </div>
+    <hr style="border:0;border-top:1px solid var(--line);margin:2.5rem 0 1rem" />
+    <p class="muted" style="font-size:.9rem">
+      <a href={url('/blog')}>← All posts</a> ·
+      <a href={`${GITHUB_REPO_URL}/edit/${SITE.github.branch}/src/content/blog/${post.id}.md`} target="_blank" rel="noopener">Edit this post on GitHub</a>
+    </p>
+  </article>
+</Base>

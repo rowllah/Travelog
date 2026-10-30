@@ -1,0 +1,109 @@
+title: UK & Ireland — London, Dublin, Cambridge, Skye & the South West
+country: United Kingdom & Ireland
+flag: 🇬🇧
+region: Europe
+destinations: [London, Dublin, Cliffs of Moher, Galway, Giant's Causeway, Cambridge, Edinburgh, Isle of Skye, Loch Ness, Stonehenge, Jurassic Coast, Dartmoor, Bath]
+startDate: 2022-09-22
+endDate: 2022-10-10
+company: Solo + work course
+travellers: 1
+styles: [City, Nature, Road trip, Culture, Solo]
+localCurrency: GBP
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/North_over_the_Quiraing%2C_Isle_of_Skye.jpg/1280px-North_over_the_Quiraing%2C_Isle_of_Skye.jpg
+coverCredit: The Quiraing, Isle of Skye — Wikimedia Commons
+summary: >-
+  Nearly three weeks around a course in Cambridge. London, a quick hop to Dublin for the Cliffs
+  of Moher and the Giant's Causeway, a 3-day Highlands and Skye tour from Edinburgh, and a
+  3-day South West loop through Stonehenge, the Jurassic Coast, Dartmoor and Bath.
+highlights:
+  - Cliffs of Moher and Galway in one day from Dublin
+  - Giant's Causeway in Northern Ireland
+  - Punting in Cambridge
+  - Eilean Donan Castle, the Quiraing and Loch Ness
+  - Stonehenge, Durdle Door and Bath
+bestTime: May–September; late September still works with fewer crowds
+budget:
+  travellers: 1
+  note: Costs weren't recorded for this trip. These are typical figures for the same route, all marked as estimates.
+  items:
+    - { label: BA return flights BLR–London, category: flights, amount: 75000, currency: INR, estimate: true }
+    - { label: UK visa + Ireland visa, category: visa, amount: 25000, currency: INR, estimate: true }
+    - { label: Ryanair London ⇄ Dublin, category: flights, amount: 90, currency: GBP, estimate: true }
+    - { label: Rabbies Skye 3-day tour, category: activities, amount: 400, currency: GBP, estimate: true }
+    - { label: Rabbies South West 3-day tour, category: activities, amount: 400, currency: GBP, estimate: true }
+    - { label: Paddywagon day tours from Dublin (2), category: activities, amount: 130, currency: EUR, estimate: true }
+    - { label: London & Dublin stays (6 nights), category: stay, amount: 900, currency: GBP, estimate: true }
+    - { label: Trains & Oyster, category: transport, amount: 200, currency: GBP, estimate: true }
+    - { label: Food, category: food, amount: 500, currency: GBP, estimate: true }
+days:
+  - title: Fly to London
+    base: London
+    stay: Martin's, Waterloo
+    items: ["06:50 BA118 from Bangalore", "13:00 Heathrow T5", "Check in, first walk along the South Bank"]
+  - title: London bus tour · Fly to Dublin
+    base: Dublin
+    stay: Wren Urban Nest
+    items: ["Hop-on hop-off bus tour", "22:30 Luton → Dublin"]
+  - title: Cliffs of Moher & Galway
+    base: Dublin
+    items: ["Paddywagon day tour — Cliffs of Moher, the Burren, Galway"]
+  - title: Giant's Causeway · Fly to London
+    base: Cambridge
+    stay: Hotel du Vin Cambridge
+    items: ["Day tour to Belfast & the Giant's Causeway", "19:35 Dublin → Gatwick", "Train to Cambridge"]
+  - title: Cambridge
+    base: Cambridge
+    items: ["Fitzwilliam Museum", "Corpus Clock", "Centre for Computing History", "Punting tour", "Pepys Library"]
+  - title: Course
+    base: Cambridge
+    items: ["Course"]
+  - title: Course
+    base: Cambridge
+    items: ["Course"]
+  - title: Course
+    base: Cambridge
+    items: ["Course"]
+  - title: Train north to Glasgow
+    base: Glasgow
+    items: ["Check out", "Train to Glasgow, stay with friends"]
+  - title: Highlands & Skye tour — day 1
+    base: Skye
+    items: ["06:00 Train to Edinburgh", "08:00 Rabbies tour — Stirling Castle, Glencoe, Eilean Donan Castle, Portree"]
+  - title: Skye — day 2
+    base: Skye
+    items: ["Trotternish Ridge — Old Man of Storr, Quiraing, Kilt Rock", "Portree"]
+  - title: Loch Ness — day 3
+    items: ["Loch Ness", "Perthshire", "19:00 Back in Edinburgh, train to London"]
+  - title: South West tour — Stonehenge & Jurassic Coast
+    base: Exeter
+    items: ["08:00 Rabbies tour — Stonehenge", "Jurassic Coast & Durdle Door", "Exeter"]
+  - title: Dartmoor
+    base: Exeter
+    items: ["Dartmoor, Tavistock, the clapper bridge"]
+  - title: Glastonbury & Bath
+    base: London
+    stay: Martin's, Waterloo
+    items: ["Glastonbury Tor", "Bath — Roman Baths and the Royal Crescent", "18:00 Back in London"]
+  - title: London shopping
+    base: London
+    items: ["Oxford Street, Covent Garden, Borough Market"]
+  - title: Last London day · Fly home
+    items: ["14:15 BA119 from Heathrow T5", "Arrive Bangalore 04:45 next day"]
+places:
+  - { name: Hotel du Vin Cambridge, type: stay, location: Cambridge, favourite: true }
+  - { name: Wren Urban Nest, type: stay, location: Dublin, notes: "Modern pod-style hotel, central" }
+  - { name: Rabbies — Isle of Skye 3-day tour, type: experience, location: Edinburgh, link: "https://www.rabbies.com/en/scotland-tours/from-edinburgh/2-4-day-tours/the-isle-of-skye-3-day-tour", favourite: true }
+  - { name: "Rabbies — Stonehenge, Glastonbury, Bath & South West Coast 3-day tour", type: experience, location: London, link: "https://www.rabbies.com/en/england-tours/from-london/2-4-day-tours/stonehenge-glastonbury-bath-the-south-west-coast-3-day-tour" }
+  - { name: Paddywagon — Cliffs of Moher day tour, type: activity, location: Dublin, link: "https://www.paddywagontours.com/CLIFFS-OF-MOHER-Day-Tour-From-DUBLIN" }
+  - { name: Giant's Causeway day tour, type: activity, location: Belfast }
+  - { name: Punting on the Cam, type: experience, location: Cambridge, favourite: true }
+  - { name: Fitzwilliam Museum, type: activity, location: Cambridge, notes: Free }
+  - { name: Centre for Computing History, type: activity, location: Cambridge, notes: A treat for techies }
+  - { name: Eilean Donan Castle, type: activity, location: Highlands }
+  - { name: Durdle Door, type: activity, location: Jurassic Coast }
+  - { name: Roman Baths, type: activity, location: Bath }
+tips:
+  - Ireland needs a separate visa (unless you have the BIVS-endorsed UK visa) — plan ahead.
+  - Rabbies small-group tours are an easy way to see the Highlands without driving on the left.
+  - Get a contactless card for London transport; it's capped daily like an Oyster.
+  - Pack layers and a rain jacket, even in September.

@@ -1,0 +1,410 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { sortTrips, GITHUB_REPO_URL, SITE, PLACE_LABELS, BUDGET_LABELS } from '../lib/site';
+import { CURRENCIES } from '../lib/fx';
+
+const trips = sortTrips(await getCollection('trips'));
+const regions = [...new Set(trips.map((t) => t.data.region))].sort();
+const styles = [...new Set(trips.flatMap((t) => t.data.styles))].sort();
+const repo = { url: GITHUB_REPO_URL, branch: SITE.github.branch };
+---
+
+<Base title="Add a trip or post" description="Add a new trip, write a journal post or upload photos.">
+  <section class="hero" style="padding-bottom:1.5rem">
+    <div class="wrap">
+      <p class="eyebrow">Keep it growing</p>
+      <h1>Add a trip, a post or photos</h1>
+      <p class="lead">
+        Fill in what you know and leave the rest blank. <strong>Publish on GitHub</strong> opens GitHub with the file ready, and
+        you just click <em>Commit changes</em>. The site rebuilds itself in about a minute. Drafts are saved on this device as you type.
+      </p>
+      <div class="tabs">
+        <a class="btn btn-small" href="#trip">🧳 New trip</a>
+        <a class="btn btn-small btn-ghost" href="#blog">✍️ Journal post</a>
+        <a class="btn btn-small btn-ghost" href="#photos">📷 Photos</a>
+        <a class="btn btn-small btn-ghost" href="#edit">✏️ Edit an existing trip</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="trip" style="padding-top:1rem">
+    <h2>🧳 New trip</h2>
+    <div class="two-col">
+      <form class="stack" id="trip-form" onsubmit="return false">
+        <div class="card stack">
+          <h3>Basics</h3>
+          <div class="grid-2">
+            <label class="field">Title *<input name="title" placeholder="Japan — Tokyo, Kyoto & Osaka" required /></label>
+            <label class="field">Country *<input name="country" placeholder="Japan" /></label>
+            <label class="field">Flag emoji<input name="flag" placeholder="🇯🇵" /></label>
+            <label class="field">Region
+              <input name="region" list="regions" placeholder="East Asia" />
+              <datalist id="regions">{regions.map((r) => <option value={r} />)}</datalist>
+            </label>
+            <label class="field">Start date<input name="startDate" type="date" /></label>
+            <label class="field">End date<input name="endDate" type="date" /></label>
+            <label class="field">Travelled with<input name="company" placeholder="Friends / Family / Solo" /></label>
+            <label class="field">Number of travellers<input name="travellers" type="number" min="1" value="1" /></label>
+            <label class="field">Local currency
+              <select name="localCurrency">{CURRENCIES.map((c) => <option>{c}</option>)}</select>
+            </label>
+            <label class="field">Mark as upcoming
+              <select name="upcoming"><option value="">No — I've done it</option><option value="true">Yes — planned</option></select>
+            </label>
+          </div>
+          <label class="field">Destinations (comma separated)<input name="destinations" placeholder="Tokyo, Hakone, Kyoto, Osaka" /></label>
+          <label class="field">Styles (comma separated)
+            <input name="styles" placeholder={styles.slice(0, 6).join(', ')} />
+          </label>
+          <label class="field">Summary *<textarea name="summary" placeholder="Two or three sentences about the trip."></textarea></label>
+          <label class="field">Highlights (one per line)<textarea name="highlights"></textarea></label>
+          <label class="field">Best time to go<input name="bestTime" /></label>
+          <label class="field">Cover image URL (or /photos/your-trip/cover.jpg after uploading)<input name="cover" /></label>
+        </div>
+
+        <div class="card stack">
+          <h3>Itinerary</h3>
+          <p class="muted" style="font-size:.88rem;margin:0">
+            Start each day with <code>#</code>. You can add <code>| base: Town</code> and <code>| stay: Hotel</code>. Each line below it is
+            one activity, and an optional time at the start (<code>14:00</code>) gets its own column.
+          </p>
+          <textarea name="days" class="input" style="min-height:14rem;font-family:ui-monospace,monospace;font-size:.85rem" placeholder={`# Arrive in Tokyo | base: Tokyo | stay: Hotel Gracery\n10:40 Land at Haneda\n15:00 Shinjuku walk\n# Day trip to Hakone\nRomancecar train\nLake Ashi cruise`}></textarea>
+        </div>
+
+        <div class="card stack">
+          <div class="section-head" style="margin:0"><h3 style="margin:0">Hotels, food, activities & experiences</h3><button type="button" class="btn btn-ghost btn-small" data-add="place">+ Add</button></div>
+          <div class="stack" id="places"></div>
+        </div>
+
+        <div class="card stack">
+          <div class="section-head" style="margin:0"><h3 style="margin:0">Budget</h3><button type="button" class="btn btn-ghost btn-small" data-add="budget">+ Add item</button></div>
+          <label class="field">These amounts are for how many people?<input name="budgetTravellers" type="number" min="1" value="1" /></label>
+          <div class="stack" id="budget"></div>
+          <label class="field">Budget note<input name="budgetNote" placeholder="Actual spends per person" /></label>
+        </div>
+
+        <div class="card stack">
+          <h3>Tips & checklist</h3>
+          <label class="field">Tips (one per line)<textarea name="tips"></textarea></label>
+          <label class="field">Don't-forget checklist (comma separated)<input name="checklist" /></label>
+        </div>
+      </form>
+
+      <aside class="stack sticky">
+        <div class="card stack">
+          <h3>Publish</h3>
+          <p class="muted" style="font-size:.85rem;margin:0">File: <code id="trip-file">src/content/trips/…</code></p>
+          <button class="btn btn-coral" id="trip-publish">🚀 Publish on GitHub</button>
+          <button class="btn btn-ghost" id="trip-copy">📋 Copy YAML</button>
+          <button class="btn btn-ghost" id="trip-download">⬇️ Download .yaml</button>
+          <button class="btn btn-ghost btn-small" id="trip-clear">Clear form</button>
+          <p class="muted" id="trip-msg" style="font-size:.85rem;margin:0"></p>
+        </div>
+        <details class="card">
+          <summary style="cursor:pointer;font-weight:600">Preview YAML</summary>
+          <pre class="yaml" id="trip-yaml"></pre>
+        </details>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap section" id="blog">
+    <h2>✍️ Journal post</h2>
+    <div class="two-col">
+      <form class="card stack" id="blog-form" onsubmit="return false">
+        <div class="grid-2">
+          <label class="field">Title *<input name="title" required /></label>
+          <label class="field">Date<input name="date" type="date" /></label>
+          <label class="field">Linked trip
+            <select name="trip"><option value="">— none —</option>{trips.map((t) => <option value={t.id}>{t.data.flag} {t.data.title}</option>)}</select>
+          </label>
+          <label class="field">Tags (comma separated)<input name="tags" placeholder="diving, food" /></label>
+        </div>
+        <label class="field">One-line excerpt<input name="excerpt" /></label>
+        <label class="field">Cover image URL (optional)<input name="cover" /></label>
+        <label class="field">Story (Markdown — **bold**, ## headings, - lists, ![photo](/travelog/photos/trip/1.jpg))
+          <textarea name="body" style="min-height:18rem"></textarea>
+        </label>
+      </form>
+      <aside class="stack sticky">
+        <div class="card stack">
+          <h3>Publish</h3>
+          <p class="muted" style="font-size:.85rem;margin:0">File: <code id="blog-file">src/content/blog/…</code></p>
+          <button class="btn btn-coral" id="blog-publish">🚀 Publish on GitHub</button>
+          <button class="btn btn-ghost" id="blog-copy">📋 Copy Markdown</button>
+          <p class="muted" id="blog-msg" style="font-size:.85rem;margin:0"></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap section" id="photos">
+    <h2>📷 Photos</h2>
+    <div class="card">
+      <ol class="tips">
+        <li>Resize photos to about 1600 px wide first. Phone photos are huge and slow the site down (macOS Preview → Tools → Adjust Size).</li>
+        <li>
+          Pick a trip and click upload. GitHub opens the trip's photo folder, where you can drag in your images and commit:
+          <div style="display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap">
+            <select class="input" id="photo-trip">{trips.map((t) => <option value={t.id}>{t.data.flag} {t.data.title}</option>)}</select>
+            <button class="btn btn-small" id="photo-upload">Upload to GitHub ↗</button>
+          </div>
+        </li>
+        <li>
+          Then edit that trip's YAML (section below) and list the photos. The first one makes a good cover:
+          <pre class="yaml">{`cover: /photos/<trip-id>/sunset.jpg
+photos:
+  - { src: /photos/<trip-id>/sunset.jpg, caption: Radhanagar at sunset }
+  - { src: /photos/<trip-id>/dive.jpg, caption: First open-water dive }`}</pre>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap section" id="edit">
+    <h2>✏️ Edit an existing trip</h2>
+    <div class="card">
+      <p class="muted">Opens the trip's file in GitHub's editor. Change anything, then click <em>Commit changes</em>.</p>
+      <div class="chips">
+        {
+          trips.map((t) => (
+            <a class="chip" style="text-decoration:none" target="_blank" rel="noopener" href={`${repo.url}/edit/${repo.branch}/src/content/trips/${t.id}.yaml`}>
+              {t.data.flag} {t.id}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <template id="tpl-place">
+    <div class="repeat-row" data-row="place">
+      <button type="button" class="icon-btn remove" title="Remove">✕</button>
+      <div class="grid-2">
+        <label class="field">Name<input data-k="name" /></label>
+        <label class="field">Type
+          <select data-k="type">{Object.entries(PLACE_LABELS).map(([k, v]) => <option value={k}>{v.icon} {v.label}</option>)}</select>
+        </label>
+        <label class="field">Location<input data-k="location" /></label>
+        <label class="field">Link (booking / maps)<input data-k="link" type="url" /></label>
+        <label class="field">Cost<input data-k="cost" type="number" step="any" /></label>
+        <label class="field">Currency<select data-k="currency"><option value="">(local)</option>{CURRENCIES.map((c) => <option>{c}</option>)}</select></label>
+        <label class="field">Per (person, night, group…)<input data-k="per" /></label>
+        <label class="field">Status
+          <select data-k="status"><option value="tried">Did it</option><option value="fav">⭐ Favourite</option><option value="wish">Wishlist</option></select>
+        </label>
+      </div>
+      <label class="field">Notes<input data-k="notes" /></label>
+    </div>
+  </template>
+  <template id="tpl-budget">
+    <div class="repeat-row" data-row="budget">
+      <button type="button" class="icon-btn remove" title="Remove">✕</button>
+      <div class="grid-2">
+        <label class="field">Item<input data-k="label" placeholder="Return flights" /></label>
+        <label class="field">Category<select data-k="category">{Object.entries(BUDGET_LABELS).map(([k, v]) => <option value={k}>{v}</option>)}</select></label>
+        <label class="field">Amount<input data-k="amount" type="number" step="any" /></label>
+        <label class="field">Currency<select data-k="currency">{CURRENCIES.map((c) => <option>{c}</option>)}</select></label>
+        <label class="field">Estimate?<select data-k="estimate"><option value="">Actual</option><option value="true">Estimate</option></select></label>
+      </div>
+    </div>
+  </template>
+
+  <script id="repo-data" type="application/json" set:html={JSON.stringify(repo)} />
+</Base>
+
+<script>
+  import { slugify } from '../lib/site';
+
+  const repo = JSON.parse(document.getElementById('repo-data')!.textContent!);
+  const MAX_URL = 7500;
+
+  /* ---------- tiny YAML writer (JSON strings are valid YAML scalars) ---------- */
+  const scalar = (v: unknown) => (typeof v === 'string' ? JSON.stringify(v) : String(v));
+  function yaml(obj: Record<string, any>, indent = ''): string {
+    let out = '';
+    for (const [k, v] of Object.entries(obj)) {
+      if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) continue;
+      if (Array.isArray(v)) {
+        out += `${indent}${k}:\n`;
+        for (const item of v) {
+          if (item && typeof item === 'object') {
+            const body = yaml(item, indent + '    ').replace(/^\s+/, '');
+            out += `${indent}  - ${body}`;
+          } else out += `${indent}  - ${scalar(item)}\n`;
+        }
+      } else if (v && typeof v === 'object') {
+        out += `${indent}${k}:\n${yaml(v, indent + '  ')}`;
+      } else out += `${indent}${k}: ${scalar(v)}\n`;
+    }
+    return out;
+  }
+
+  const lines = (s: string) => s.split('\n').map((x) => x.trim()).filter(Boolean);
+  const csv = (s: string) => s.split(',').map((x) => x.trim()).filter(Boolean);
+
+  function parseDays(text: string) {
+    const days: any[] = [];
+    for (const raw of text.split('\n')) {
+      const line = raw.trim();
+      if (!line) continue;
+      if (line.startsWith('#')) {
+        const [title, ...attrs] = line.replace(/^#+\s*/, '').split('|').map((x) => x.trim());
+        const day: any = { title, items: [] };
+        for (const a of attrs) {
+          const m = a.match(/^(base|stay)\s*:\s*(.+)$/i);
+          if (m) day[m[1].toLowerCase()] = m[2];
+        }
+        days.push(day);
+      } else {
+        if (!days.length) days.push({ title: 'Day 1', items: [] });
+        days[days.length - 1].items.push(line);
+      }
+    }
+    return days.map(({ title, base, stay, items }) => ({ title, base, stay, items }));
+  }
+
+  /* ---------- trip form ---------- */
+  const form = document.getElementById('trip-form') as HTMLFormElement;
+  const DRAFT = 'travelog:draft-trip';
+
+  function addRow(kind: 'place' | 'budget', values: Record<string, string> = {}) {
+    const tpl = document.getElementById(`tpl-${kind}`) as HTMLTemplateElement;
+    const node = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+    node.querySelectorAll<HTMLInputElement>('[data-k]').forEach((el) => {
+      if (values[el.dataset.k!] !== undefined) el.value = values[el.dataset.k!];
+    });
+    node.querySelector('.remove')!.addEventListener('click', () => { node.remove(); update(); });
+    document.getElementById(kind === 'place' ? 'places' : 'budget')!.append(node);
+  }
+
+  const rows = (kind: string) =>
+    [...document.querySelectorAll<HTMLElement>(`[data-row="${kind}"]`)].map((row) =>
+      Object.fromEntries([...row.querySelectorAll<HTMLInputElement>('[data-k]')].map((el) => [el.dataset.k!, el.value.trim()])),
+    );
+
+  function tripObject() {
+    const f = Object.fromEntries(new FormData(form)) as Record<string, string>;
+    const places = rows('place').filter((p) => p.name).map((p) => ({
+      name: p.name, type: p.type, location: p.location || undefined, notes: p.notes || undefined,
+      cost: p.cost ? Number(p.cost) : undefined, currency: p.currency || undefined, per: p.per || undefined,
+      link: p.link || undefined, tried: p.status === 'wish' ? false : undefined, favourite: p.status === 'fav' ? true : undefined,
+    }));
+    const items = rows('budget').filter((b) => b.label && b.amount).map((b) => ({
+      label: b.label, category: b.category, amount: Number(b.amount), currency: b.currency, estimate: b.estimate ? true : undefined,
+    }));
+    return {
+      title: f.title, country: f.country, flag: f.flag || undefined, region: f.region || 'Elsewhere',
+      destinations: csv(f.destinations ?? ''), startDate: f.startDate || undefined, endDate: f.endDate || undefined,
+      company: f.company || undefined, travellers: Number(f.travellers) || 1, styles: csv(f.styles ?? ''),
+      localCurrency: f.localCurrency, upcoming: f.upcoming ? true : undefined, cover: f.cover || undefined,
+      summary: f.summary || 'Notes coming soon.', highlights: lines(f.highlights ?? ''), bestTime: f.bestTime || undefined,
+      budget: items.length ? { travellers: Number(f.budgetTravellers) || 1, note: f.budgetNote || undefined, items } : undefined,
+      days: parseDays(f.days ?? ''), places, tips: lines(f.tips ?? ''), checklist: csv(f.checklist ?? ''),
+    };
+  }
+
+  const tripSlug = () => {
+    const t = tripObject();
+    const year = t.startDate ? t.startDate.slice(0, 4) : '';
+    return slugify([t.country || t.title || 'trip', year].filter(Boolean).join(' ')) || 'new-trip';
+  };
+  const tripYaml = () => yaml(tripObject()).replace(/^(\s*)startDate: "(.+)"$/m, '$1startDate: $2').replace(/^(\s*)endDate: "(.+)"$/m, '$1endDate: $2');
+
+  function update() {
+    document.getElementById('trip-yaml')!.textContent = tripYaml();
+    document.getElementById('trip-file')!.textContent = `src/content/trips/${tripSlug()}.yaml`;
+    const fields = Object.fromEntries(new FormData(form));
+    localStorage.setItem(DRAFT, JSON.stringify({ fields, places: rows('place'), budget: rows('budget') }));
+  }
+
+  function restore() {
+    const draft = JSON.parse(localStorage.getItem(DRAFT) || 'null');
+    if (!draft) { addRow('place'); addRow('budget', { label: 'Return flights', category: 'flights' }); return; }
+    for (const [k, v] of Object.entries(draft.fields)) {
+      const el = form.elements.namedItem(k) as HTMLInputElement | null;
+      if (el) el.value = v as string;
+    }
+    draft.places.forEach((p: any) => addRow('place', p));
+    draft.budget.forEach((b: any) => addRow('budget', b));
+  }
+
+  function githubNew(dir: string, filename: string, content: string, msgEl: HTMLElement) {
+    const link = `${repo.url}/new/${repo.branch}/${dir}?filename=${encodeURIComponent(filename)}&value=${encodeURIComponent(content)}`;
+    if (link.length > MAX_URL) {
+      navigator.clipboard.writeText(content);
+      window.open(`${repo.url}/new/${repo.branch}/${dir}?filename=${encodeURIComponent(filename)}`, '_blank');
+      msgEl.textContent = 'This one is too long to prefill, so the content is copied to your clipboard. Paste it into the GitHub editor and commit.';
+    } else {
+      window.open(link, '_blank');
+      msgEl.textContent = 'GitHub opened in a new tab. Review the file and click "Commit changes".';
+    }
+  }
+
+  const tripMsg = document.getElementById('trip-msg')!;
+  form.addEventListener('input', update);
+  document.querySelectorAll<HTMLButtonElement>('[data-add]').forEach((b) =>
+    b.addEventListener('click', () => { addRow(b.dataset.add as 'place' | 'budget'); update(); }),
+  );
+  document.getElementById('trip-publish')!.addEventListener('click', () => {
+    if (!tripObject().title) { tripMsg.textContent = 'Add at least a title first.'; return; }
+    githubNew('src/content/trips', `${tripSlug()}.yaml`, tripYaml(), tripMsg);
+  });
+  document.getElementById('trip-copy')!.addEventListener('click', async () => { await navigator.clipboard.writeText(tripYaml()); tripMsg.textContent = 'YAML copied.'; });
+  document.getElementById('trip-download')!.addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([tripYaml()], { type: 'text/yaml' }));
+    a.download = `${tripSlug()}.yaml`;
+    a.click();
+  });
+  document.getElementById('trip-clear')!.addEventListener('click', () => {
+    if (!confirm('Clear the whole trip form?')) return;
+    localStorage.removeItem(DRAFT);
+    form.reset();
+    document.querySelectorAll('[data-row]').forEach((r) => r.remove());
+    restore();
+    update();
+  });
+  restore();
+  update();
+
+  /* ---------- blog form ---------- */
+  const bform = document.getElementById('blog-form') as HTMLFormElement;
+  const BDRAFT = 'travelog:draft-post';
+  const bmsg = document.getElementById('blog-msg')!;
+  const bdraft = JSON.parse(localStorage.getItem(BDRAFT) || '{}');
+  for (const [k, v] of Object.entries(bdraft)) {
+    const el = bform.elements.namedItem(k) as HTMLInputElement | null;
+    if (el) el.value = v as string;
+  }
+  const preTrip = new URLSearchParams(location.search).get('blog');
+  if (preTrip) (bform.elements.namedItem('trip') as HTMLSelectElement).value = preTrip;
+  const dateEl = bform.elements.namedItem('date') as HTMLInputElement;
+  if (!dateEl.value) dateEl.value = new Date().toISOString().slice(0, 10);
+
+  function postMarkdown() {
+    const f = Object.fromEntries(new FormData(bform)) as Record<string, string>;
+    const front = yaml({ title: f.title, date: f.date, trip: f.trip || undefined, excerpt: f.excerpt || undefined, cover: f.cover || undefined, tags: csv(f.tags ?? '') })
+      .replace(/^date: "(.+)"$/m, 'date: $1');
+    return `---\n${front}---\n\n${f.body ?? ''}\n`;
+  }
+  const postSlug = () => slugify((bform.elements.namedItem('title') as HTMLInputElement).value) || 'new-post';
+  const bupdate = () => {
+    document.getElementById('blog-file')!.textContent = `src/content/blog/${postSlug()}.md`;
+    localStorage.setItem(BDRAFT, JSON.stringify(Object.fromEntries(new FormData(bform))));
+  };
+  bform.addEventListener('input', bupdate);
+  bupdate();
+  document.getElementById('blog-publish')!.addEventListener('click', () => {
+    if (!(bform.elements.namedItem('title') as HTMLInputElement).value) { bmsg.textContent = 'Add a title first.'; return; }
+    githubNew('src/content/blog', `${postSlug()}.md`, postMarkdown(), bmsg);
+  });
+  document.getElementById('blog-copy')!.addEventListener('click', async () => { await navigator.clipboard.writeText(postMarkdown()); bmsg.textContent = 'Markdown copied.'; });
+
+  /* ---------- photos ---------- */
+  document.getElementById('photo-upload')!.addEventListener('click', () => {
+    const id = (document.getElementById('photo-trip') as HTMLSelectElement).value;
+    window.open(`${repo.url}/upload/${repo.branch}/public/photos/${id}`, '_blank');
+  });
+</script>

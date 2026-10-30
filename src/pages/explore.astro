@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Money from '../components/Money.astro';
+import { url, sortTrips, PLACE_LABELS } from '../lib/site';
+
+const trips = sortTrips(await getCollection('trips'));
+const places = trips.flatMap((t) => t.data.places.map((p) => ({ ...p, trip: t })));
+const countries = [...new Set(trips.map((t) => t.data.country))].sort();
+const counts = Object.fromEntries(Object.keys(PLACE_LABELS).map((k) => [k, places.filter((p) => p.type === k).length]));
+---
+
+<Base title="Explore" description="Every hotel, restaurant, activity and experience from my trips, in one filterable list.">
+  <section class="hero" style="padding-bottom:1.5rem">
+    <div class="wrap">
+      <p class="eyebrow">Recommendations</p>
+      <h1>Explore {places.length} places</h1>
+      <p class="lead">Hotels I stayed in, food I loved, and the activities, experiences and local operators I'd book again. Filter by what you need.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="filters">
+      <div class="filters-row">
+        <input class="input" type="search" id="x-search" placeholder="Search — e.g. hamam, sharks, kebab, Gulmarg…" />
+        <select class="input" id="x-country">
+          <option value="">All destinations</option>
+          {countries.map((c) => <option value={c}>{c}</option>)}
+        </select>
+        <select class="input" id="x-sort">
+          <option value="">Sort: by trip</option>
+          <option value="price-asc">Price: low → high</option>
+          <option value="price-desc">Price: high → low</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+      <div class="filters-row chips" id="x-types">
+        <button class="chip" type="button" aria-pressed="true" data-type="">All</button>
+        {
+          Object.entries(PLACE_LABELS).map(([k, v]) => (
+            <button class="chip" type="button" aria-pressed="false" data-type={k}>
+              {v.icon} {v.label} ({counts[k]})
+            </button>
+          ))
+        }
+      </div>
+      <div class="filters-row chips">
+        <button class="chip" type="button" aria-pressed="false" id="x-fav">⭐ Favourites only</button>
+        <button class="chip" type="button" aria-pressed="false" id="x-priced">💰 Has a price</button>
+        <button class="chip" type="button" aria-pressed="false" id="x-tried">✅ I've done it</button>
+        <button class="chip" type="button" aria-pressed="false" id="x-wish">📌 Wishlist</button>
+      </div>
+      <span class="result-count" id="x-count"></span>
+    </div>
+
+    <div class="place-grid" id="x-grid">
+      {
+        places.map((p, i) => (
+          <div
+            class="place"
+            data-i={i}
+            data-type={p.type}
+            data-country={p.trip.data.country}
+            data-fav={p.favourite ? '1' : ''}
+            data-tried={p.tried ? '1' : ''}
+            data-cost={p.cost ?? ''}
+            data-cur={p.currency ?? p.trip.data.localCurrency}
+            data-name={p.name.toLowerCase()}
+            data-search={[p.name, p.location, p.notes, p.trip.data.title, p.trip.data.country].join(' ').toLowerCase()}
+          >
+            <div class="place-top">
+              <span class="place-type">
+                {PLACE_LABELS[p.type].icon} {PLACE_LABELS[p.type].label}
+              </span>
+              {p.favourite && <span class="badge badge-fav">⭐</span>}
+              {!p.tried && <span class="badge badge-wish">Wishlist</span>}
+            </div>
+            <h4>{p.name}</h4>
+            {p.location && <p class="muted">📍 {p.location}</p>}
+            {p.notes && <p>{p.notes}</p>}
+            {p.cost !== undefined && (
+              <p class="place-cost">
+                <Money amount={p.cost} max={p.costMax} currency={p.currency ?? p.trip.data.localCurrency} />
+                {p.per && <span class="muted"> / {p.per}</span>}
+              </p>
+            )}
+            <div style="display:flex;justify-content:space-between;gap:.5rem;margin-top:auto;padding-top:.4rem">
+              <a class="place-trip" href={url(`/trips/${p.trip.id}#places`)}>
+                {p.trip.data.flag} {p.trip.data.title.split('—')[0].trim()} {p.trip.data.startDate?.getUTCFullYear() ?? ''}
+              </a>
+              {p.link && (
+                <a class="link" href={p.link} target="_blank" rel="noopener">
+                  Book ↗
+                </a>
+              )}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { toSelected } from '../scripts/currency';
+
+  const grid = document.getElementById('x-grid')!;
+  const items = [...grid.querySelectorAll<HTMLElement>('.place')];
+  const search = document.getElementById('x-search') as HTMLInputElement;
+  const country = document.getElementById('x-country') as HTMLSelectElement;
+  const sort = document.getElementById('x-sort') as HTMLSelectElement;
+  const typeBtns = [...document.querySelectorAll<HTMLButtonElement>('#x-types button')];
+  const toggles = ['x-fav', 'x-priced', 'x-tried', 'x-wish'].map((id) => document.getElementById(id) as HTMLButtonElement);
+  const count = document.getElementById('x-count')!;
+  let type = new URLSearchParams(location.search).get('type') ?? '';
+
+  const on = (b: HTMLButtonElement) => b.getAttribute('aria-pressed') === 'true';
+
+  function apply() {
+    const q = search.value.trim().toLowerCase();
+    const [fav, priced, tried, wish] = toggles.map(on);
+    typeBtns.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.type ?? '') === type)));
+    let shown = 0;
+    for (const el of items) {
+      const ok =
+        (!type || el.dataset.type === type) &&
+        (!country.value || el.dataset.country === country.value) &&
+        (!q || el.dataset.search!.includes(q)) &&
+        (!fav || el.dataset.fav) &&
+        (!priced || el.dataset.cost) &&
+        (!tried || el.dataset.tried) &&
+        (!wish || !el.dataset.tried);
+      el.hidden = !ok;
+      if (ok) shown++;
+    }
+    const price = (el: HTMLElement) => (el.dataset.cost ? toSelected(Number(el.dataset.cost), el.dataset.cur!) : NaN);
+    const sorted = [...items].sort((a, b) => {
+      switch (sort.value) {
+        case 'price-asc': return (price(a) || Infinity) - (price(b) || Infinity);
+        case 'price-desc': return (price(b) || -Infinity) - (price(a) || -Infinity);
+        case 'name': return a.dataset.name!.localeCompare(b.dataset.name!);
+        default: return Number(a.dataset.i) - Number(b.dataset.i);
+      }
+    });
+    grid.append(...sorted);
+    count.textContent = `${shown} of ${items.length} places`;
+  }
+
+  typeBtns.forEach((b) => b.addEventListener('click', () => { type = b.dataset.type ?? ''; apply(); }));
+  toggles.forEach((b) => b.addEventListener('click', () => { b.setAttribute('aria-pressed', String(!on(b))); apply(); }));
+  [search, country, sort].forEach((el) => el.addEventListener('input', apply));
+  window.addEventListener('currencychange', apply);
+  apply();
+</script>

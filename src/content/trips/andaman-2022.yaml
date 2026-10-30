@@ -1,0 +1,102 @@
+title: Andaman — Learning to dive in Havelock
+country: India
+flag: 🇮🇳
+region: India — Islands
+destinations: [Port Blair, Havelock (Swaraj Dweep), Neil (Shaheed Dweep)]
+startDate: 2022-01-22
+endDate: 2022-02-04
+company: Friends
+travellers: 1
+styles: [Beach, Diving, Islands, Adventure]
+localCurrency: INR
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Radha_Nagar_beach%2C_Havelock_Island%2C_Andamn%2C_India-_Sun_set_view.jpg/1280px-Radha_Nagar_beach%2C_Havelock_Island%2C_Andamn%2C_India-_Sun_set_view.jpg
+coverCredit: Radhanagar Beach, Havelock — Wikimedia Commons
+summary: >-
+  Two weeks in the Andamans built around a 7-day scuba course in Havelock, then fun dives in Neil
+  and a few days of history and islands around Port Blair. Slow, salty and the trip that
+  started the diving obsession.
+highlights:
+  - Seven days of scuba training in Havelock
+  - Sunsets at Radhanagar (Beach No. 7) and Kalapathar
+  - Fun dives and natural bridge at Neil
+  - North Bay, Ross Island and the Cellular Jail light show
+bestTime: November–April (calm seas, best visibility)
+budget:
+  travellers: 1
+  note: Actual costs for this trip weren't recorded — these are typical prices for a similar trip, marked as estimates.
+  items:
+    - { label: Return flights BLR–Port Blair, category: flights, amount: 14000, currency: INR, estimate: true }
+    - { label: Ferries (Makruzz) Port Blair–Havelock–Neil–Port Blair, category: transport, amount: 4500, currency: INR, estimate: true }
+    - { label: Stays (13 nights), category: stay, amount: 40000, currency: INR, estimate: true }
+    - { label: Scuba course + fun dives, category: activities, amount: 35000, currency: INR, estimate: true }
+    - { label: Food, category: food, amount: 15000, currency: INR, estimate: true }
+days:
+  - title: Fly to Port Blair · Cellular Jail
+    base: Port Blair
+    stay: Ocean Terrace
+    items: ["12:35 Depart BLR", "15:00 Arrive Port Blair, check in", "Local market", "Cellular Jail light & sound show"]
+  - title: Ferry to Havelock · Scuba day 1
+    base: Havelock
+    stay: SeaShell Havelock
+    items: ["08:00 Makruzz ferry to Havelock", "09:30 Arrive, check in", "Scuba course day 1", "Dinner at Bonova Café"]
+  - title: Scuba day 2
+    base: Havelock
+    items: ["Scuba course day 2", "Dinner at Something Different"]
+  - title: Scuba day 3 · Kalapathar
+    base: Havelock
+    items: ["Scuba course day 3", "Kalapathar beach"]
+  - title: Scuba day 4 · Elephant Beach
+    base: Havelock
+    items: ["Scuba course day 4", "Elephant Beach", "Salt Water Café"]
+  - title: Scuba day 5 · Radhanagar
+    base: Havelock
+    items: ["Scuba course day 5", "Radhanagar beach sunset"]
+  - title: Scuba day 6 · Beach No. 7
+    base: Havelock
+    items: ["Scuba course day 6", "Beach No. 7", "The Beach Shack"]
+  - title: Scuba day 7 — certified!
+    base: Havelock
+    items: ["Final course dives", "Local market"]
+  - title: Ferry to Neil · Fun dive
+    base: Neil
+    stay: SeaShell Neil
+    items: ["10:00 Ferry to Neil", "11:00 Check in", "Fun dive"]
+  - title: Bharatpur beach
+    base: Neil
+    items: ["Bharatpur beach", "Shallow water activities — glass-bottom boat, snorkelling"]
+  - title: Back to Port Blair · Chidiya Tapu
+    base: Port Blair
+    stay: SeaShell Port Blair
+    items: ["11:30 Ferry to Port Blair", "Sea Shore Café", "Corbyn's Cove", "Chidiya Tapu sunset", "Cellular Jail"]
+  - title: North Bay & Ross Island
+    base: Port Blair
+    items: ["North Bay island", "Ross Island", "Fish Net Bar & Grill", "Aberdeen Bazaar"]
+  - title: Baratang
+    base: Port Blair
+    items: ["Baratang day trip — limestone caves and mangroves", "Gandhi market"]
+  - title: Fly home
+    items: ["Lighthouse", "14:30 Depart Port Blair", "17:00 Arrive BLR"]
+places:
+  - { name: SeaShell Havelock, type: stay, location: Havelock, notes: "Andaman Bungalow room, steps from the beach", favourite: true }
+  - { name: SeaShell Neil, type: stay, location: Neil, notes: Lagoon-facing rooms }
+  - { name: SeaShell Port Blair, type: stay, location: Port Blair }
+  - { name: Ocean Terrace, type: stay, location: Port Blair }
+  - { name: Bonova Café, type: food, location: Havelock }
+  - { name: Something Different, type: food, location: Havelock, notes: Beachfront café }
+  - { name: Salt Water Café, type: food, location: Havelock }
+  - { name: The Beach Shack, type: food, location: Havelock }
+  - { name: Sea Shore Café, type: food, location: Port Blair }
+  - { name: Fish Net Bar & Grill, type: food, location: Port Blair }
+  - { name: Open Water scuba course, type: experience, location: Havelock, notes: 7-day course with a Havelock dive shop, favourite: true }
+  - { name: Cellular Jail light & sound show, type: experience, location: Port Blair }
+  - { name: Radhanagar beach sunset, type: activity, location: Havelock }
+  - { name: Elephant Beach, type: activity, location: Havelock, notes: Snorkelling and water sports }
+  - { name: Natural Bridge, type: activity, location: Neil, notes: Go at low tide }
+  - { name: North Bay & Ross Island, type: activity, location: Port Blair }
+  - { name: Baratang caves & mangroves, type: activity, location: Baratang, notes: "Very early start, permits needed" }
+  - { name: Makruzz ferry, type: operator, notes: Fastest and most comfortable inter-island ferry — book ahead }
+tips:
+  - Book Makruzz ferries early in peak season; they sell out.
+  - Mobile data is weak on Havelock and Neil — download offline maps.
+  - Carry cash; ATMs on the islands run dry.
+  - Don't fly within 18–24 hours after your last dive.

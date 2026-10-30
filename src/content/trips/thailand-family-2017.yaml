@@ -1,0 +1,64 @@
+title: Thailand with family — Krabi & Bangkok
+country: Thailand
+flag: 🇹🇭
+region: Southeast Asia
+destinations: [Krabi, Ao Nang, Bangkok]
+startDate: 2017-01-25
+endDate: 2017-01-30
+company: Family
+travellers: 5
+styles: [Beach, City, Family, Islands]
+localCurrency: THB
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Railay_Beach_5.jpg/1280px-Railay_Beach_5.jpg
+coverCredit: Railay Beach, Krabi — Wikimedia Commons
+summary: >-
+  A comfortable, fully packaged family first trip abroad: two nights at a beach resort in
+  Krabi with a four-island tour, then three nights high up in Bangkok's Baiyoke Sky with
+  Safari World, Sea Life and Madame Tussauds.
+highlights:
+  - Krabi four-island tour
+  - Ocean-facing rooms at Centara Grand
+  - Safari World & Marine Park
+  - Sea Life Bangkok & Madame Tussauds
+  - City views from Baiyoke Sky
+bestTime: November–March
+budget:
+  travellers: 5
+  note: Booked as a travel-agent package. The price wasn't saved, so these are typical figures, all marked as estimates.
+  items:
+    - { label: Thai Airways BLR–Krabi–Bangkok–BLR (5 pax), category: flights, amount: 125000, currency: INR, estimate: true }
+    - { label: "Hotels — 2 nights Centara Krabi, 3 nights Baiyoke Sky (2 rooms)", category: stay, amount: 1500, currency: USD, estimate: true }
+    - { label: Tours & private transfers, category: activities, amount: 900, currency: USD, estimate: true }
+    - { label: Food & shopping, category: food, amount: 30000, currency: THB, estimate: true }
+days:
+  - title: Fly to Krabi
+    base: Krabi
+    stay: Centara Grand Beach Resort (Premium Deluxe Ocean Facing)
+    items: ["08:00 BLR → Krabi (TG)", "09:20 Arrive, private transfer", "14:00 Check in, beach time"]
+  - title: Four-island tour
+    base: Krabi
+    items: ["08:00 Krabi 4-island tour with lunch — Phra Nang Cave, Chicken, Tup & Poda islands"]
+  - title: Fly to Bangkok
+    base: Bangkok
+    stay: Baiyoke Sky Hotel (Deluxe Sky Zone)
+    items: ["10:10 Krabi → Bangkok", "14:00 Check in", "Evening at Pratunam market"]
+  - title: Sea Life & Madame Tussauds
+    base: Bangkok
+    items: ["11:00 Sea Life Bangkok Ocean World & Madame Tussauds (private transfer)", "Siam Paragon"]
+  - title: Safari World
+    base: Bangkok
+    items: ["08:00 Safari World & Marine Park with lunch"]
+  - title: Fly home
+    items: ["12:00 Check out", "21:35 Bangkok → BLR"]
+places:
+  - { name: Centara Grand Beach Resort Krabi, type: stay, location: Krabi, notes: "Private bay, ocean-facing rooms — great for families", favourite: true }
+  - { name: Baiyoke Sky Hotel, type: stay, location: Bangkok, notes: "Sky-high rooms and observation deck, next to Pratunam market" }
+  - { name: Krabi 4-island tour, type: activity, location: Krabi }
+  - { name: Safari World & Marine Park, type: activity, location: Bangkok, notes: Full day — kids loved it }
+  - { name: Sea Life Bangkok & Madame Tussauds, type: activity, location: Bangkok }
+  - { name: Indus Travel, type: operator, location: Bangkok, notes: Ground handler for the package }
+tips:
+  - Thai immigration may ask for proof of funds — about USD 700 or THB 20,000 per person in cash.
+  - Hotels take a deposit of around USD 100 per room at check-in.
+  - Early check-in isn't guaranteed; ask for luggage storage.
+  - For domestic flights at Suvarnabhumi, the ground handler meets you at the ATTA counter, exit gates 2–3.

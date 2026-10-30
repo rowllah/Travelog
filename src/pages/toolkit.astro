@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { CURRENCIES } from '../lib/fx';
+import { url, sortTrips } from '../lib/site';
+
+const trips = sortTrips(await getCollection('trips'));
+
+const lists: Record<string, string[]> = {
+  'Documents & money': [
+    'Passport (6+ months validity)', 'Visa / e-visa printout', 'Flight & hotel confirmations (printed + offline)', 'Travel insurance',
+    'Passport copies & 2–5 passport photos', 'Aadhaar & PAN copies', 'Debit/credit cards with international use enabled',
+    'Forex card / USD or EUR cash', 'Pen for immigration forms', 'Folder for travel docs',
+  ],
+  'Tech': ['Phone & charger', 'Watch charger', 'Power bank', 'Universal adapter', 'International SIM / eSIM activated', 'Offline maps downloaded', 'Offline translate pack', 'Taxi apps installed (Grab / Bolt / BiTaksi…)', 'Books / movies for the flight'],
+  'Clothes': ['Jacket / hoodie for flights', 'Shoes & socks', 'Sandals / slip-ons', 'Swimwear', 'Rain jacket (monsoon / Vietnam / Meghalaya)', 'Cap & sunglasses', 'Scarf (temples & mosques)', 'Belt', 'Hand sleeves'],
+  'Health & toiletries': [
+    'Sunscreen (reef-safe for diving)', 'Mosquito repellent', 'Sanitiser', 'Wet wipes & tissues', 'Masks', 'Toothbrush, paste, comb, lip balm',
+    'Small shampoo / conditioner / face wash', 'Moisturiser',
+    'Medicines — band-aid, paracetamol, cetirizine, digestion, sea-sickness, altitude',
+  ],
+  'Beach & dive': ['Towels for beach / pool', 'Bag for wet clothes', 'Dive cert card & logbook', 'Dive insurance (e.g. DiveAssure)', 'Dry bag'],
+  'Bits that save the day': ['Luggage locks', 'Water bottle', 'Small day bag', 'Snacks (protein bars, biscuits)', 'Spare specs & case'],
+};
+const checklists = trips.filter((t) => t.data.checklist.length);
+---
+
+<Base title="Toolkit" description="My master packing list, a live currency converter and pre-trip checklists.">
+  <section class="hero" style="padding-bottom:1.5rem">
+    <div class="wrap">
+      <p class="eyebrow">Toolkit</p>
+      <h1>Before you go</h1>
+      <p class="lead">My master packing list, merged from every trip spreadsheet. Ticks are saved on your device. There's also a live currency converter below.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="two-col">
+      <div class="stack">
+        {
+          Object.entries(lists).map(([group, items]) => (
+            <div class="card">
+              <h3>{group}</h3>
+              <ul class="checklist">
+                {items.map((i) => (
+                  <li>
+                    <label>
+                      <input type="checkbox" data-key={`${group}:${i}`} />
+                      <span>{i}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+        <button class="btn btn-ghost btn-small no-print" id="clear-checks" style="justify-self:start">Clear all ticks</button>
+      </div>
+
+      <aside class="stack sticky">
+        <div class="card">
+          <h3>Currency converter</h3>
+          <div class="stack" style="gap:.6rem">
+            <input class="input" type="number" id="cv-amt" value="1000" />
+            <div style="display:flex;gap:.5rem;align-items:center">
+              <select class="input" id="cv-from" style="flex:1">{CURRENCIES.map((c) => <option selected={c === 'INR'}>{c}</option>)}</select>
+              <button class="icon-btn" id="cv-swap" title="Swap">⇄</button>
+              <select class="input" id="cv-to" style="flex:1">{CURRENCIES.map((c) => <option selected={c === 'USD'}>{c}</option>)}</select>
+            </div>
+            <div class="total-big" id="cv-out">—</div>
+            <p class="muted" style="font-size:.8rem;margin:0"><span data-fx-status></span></p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Trip-specific "don't forget"</h3>
+          {
+            checklists.map((t) => (
+              <p style="font-size:.9rem">
+                <a href={url(`/trips/${t.id}#tips`)}>
+                  {t.data.flag} {t.data.country}
+                </a>
+                : <span class="muted">{t.data.checklist.join(', ')}</span>
+              </p>
+            ))
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { convert, formatMoney, rates } from '../scripts/currency';
+
+  const KEY = 'travelog:checklist';
+  const saved: Record<string, boolean> = JSON.parse(localStorage.getItem(KEY) || '{}');
+  const boxes = [...document.querySelectorAll<HTMLInputElement>('.checklist input')];
+  boxes.forEach((b) => {
+    b.checked = !!saved[b.dataset.key!];
+    b.addEventListener('change', () => {
+      saved[b.dataset.key!] = b.checked;
+      localStorage.setItem(KEY, JSON.stringify(saved));
+    });
+  });
+  document.getElementById('clear-checks')!.addEventListener('click', () => {
+    boxes.forEach((b) => (b.checked = false));
+    localStorage.removeItem(KEY);
+  });
+
+  const amt = document.getElementById('cv-amt') as HTMLInputElement;
+  const from = document.getElementById('cv-from') as HTMLSelectElement;
+  const to = document.getElementById('cv-to') as HTMLSelectElement;
+  const out = document.getElementById('cv-out')!;
+  const calc = () => (out.textContent = formatMoney(convert(Number(amt.value) || 0, from.value, to.value, rates().rates), to.value));
+  [amt, from, to].forEach((el) => el.addEventListener('input', calc));
+  document.getElementById('cv-swap')!.addEventListener('click', () => {
+    [from.value, to.value] = [to.value, from.value];
+    calc();
+  });
+  window.addEventListener('rateschange', calc);
+  calc();
+</script>

@@ -1,0 +1,25 @@
+---
+import { formatMoney } from '../lib/fx';
+
+interface Props {
+  amount?: number;
+  currency?: string;
+  max?: number;
+  /** For totals across currencies: [[amount, 'CUR'], ...] */
+  sum?: [number, string][];
+  prefix?: string;
+  /** Always show in this currency instead of the visitor's selected one. */
+  to?: string;
+  class?: string;
+}
+const { amount = 0, currency = 'INR', max, sum, prefix = '', to, class: cls } = Astro.props;
+const text = sum ? '…' : prefix + formatMoney(amount, currency) + (max ? ` – ${formatMoney(max, currency)}` : '');
+---
+
+{
+  sum ? (
+    <span class:list={['money', cls]} data-sum={JSON.stringify(sum)} data-prefix={prefix} data-to={to}>{text}</span>
+  ) : (
+    <span class:list={['money', cls]} data-amt={amount} data-cur={currency} data-max={max} data-prefix={prefix}>{text}</span>
+  )
+}

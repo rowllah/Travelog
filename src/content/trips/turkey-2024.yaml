@@ -1,0 +1,103 @@
+title: Türkiye — Kuşadası, Ephesus, Cappadocia & Istanbul
+country: Türkiye
+flag: 🇹🇷
+region: Europe
+destinations: [Izmir, Kuşadası, Ephesus, Şirince, Cappadocia (Göreme), Istanbul]
+startDate: 2024-04-26
+endDate: 2024-05-08
+company: Friend + work conference
+travellers: 1
+styles: [Culture, History, Adventure, Diving, City]
+localCurrency: TRY
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Cappadocia_balloon_trip%2C_Ortahisar_Castle_%2811893715185%29.jpg/1280px-Cappadocia_balloon_trip%2C_Ortahisar_Castle_%2811893715185%29.jpg
+coverCredit: Cappadocia balloons over Ortahisar — Wikimedia Commons
+summary: >-
+  A conference in Istanbul with a week of travel wrapped around it. A dive on the Aegean at
+  Kuşadası, Ephesus and Şirince, overnight buses to and from a cave hotel in Cappadocia for the
+  balloons, and then Istanbul's Hagia Sophia, Galata, the Grand Bazaar and a 16th-century hamam.
+highlights:
+  - Hot air balloon at sunrise over Cappadocia
+  - Ephesus ruins and the wine village of Şirince
+  - Green Tour — Derinkuyu underground city, Ihlara valley
+  - Aegean dive off Kuşadası
+  - Kılıç Ali Paşa Hamamı in Istanbul
+bestTime: April–May and September–October
+budget:
+  travellers: 1
+  note: Actual per-person bookings. Tours and food come from the shared expense sheet.
+  items:
+    - { label: Return flights BLR–Istanbul via Mumbai, category: flights, amount: 38000, currency: INR }
+    - { label: Sticker visa (VFS), category: visa, amount: 7000, currency: INR }
+    - { label: Flight Istanbul–Izmir, category: flights, amount: 4500, currency: INR }
+    - { label: Overnight buses (Kuşadası → Göreme → Istanbul), category: transport, amount: 4000, currency: INR }
+    - { label: Kuşadası hotel, category: stay, amount: 19826, currency: INR }
+    - { label: Cappadocia cave hotel, category: stay, amount: 17623, currency: INR }
+    - { label: Hostel, category: stay, amount: 2840, currency: INR }
+    - { label: Hot air balloon, category: activities, amount: 280, currency: EUR }
+    - { label: "Tours, Ephesus tickets, car & fuel (my share)", category: activities, amount: 15000, currency: INR }
+    - { label: "Food, coffee & snacks", category: food, amount: 12000, currency: INR }
+days:
+  - title: Overnight to Istanbul → Izmir
+    base: Kuşadası
+    stay: Hotel Ilayda
+    items: ["23:30 BLR → Mumbai, 5-hr layover", "06:35 Mumbai → Istanbul", "13:10 Istanbul → Izmir", "Transfer to Kuşadası"]
+  - title: Aegean dive day
+    base: Kuşadası
+    items: ["Dive off Kuşadası"]
+  - title: Ephesus & Şirince
+    base: Kuşadası
+    items: ["National park — Zeus' Cave", "Ephesus ancient city", "Şirince village (fruit wines, lunch)", "20:00 Overnight bus to Cappadocia"]
+  - title: Göreme · Green Tour
+    base: Cappadocia
+    stay: Travellers Cave Hotel
+    items: ["09:30 Arrive Göreme", "Green Tour — Göreme panorama, Pigeon Valley, Derinkuyu underground city, Ihlara valley, Selime monastery", "Turkish folklore night"]
+  - title: Balloons at dawn
+    base: Cappadocia
+    items: ["04:00 Hot air balloon", "Göreme Open Air Museum", "20:15 Overnight bus to Istanbul"]
+  - title: Istanbul — conference
+    base: Istanbul
+    stay: Akgün Istanbul
+    items: ["08:15 Arrive Istanbul", "Conference"]
+  - title: Conference
+    base: Istanbul
+    items: ["Conference"]
+  - title: Conference
+    base: Istanbul
+    items: ["Conference"]
+  - title: Conference
+    base: Istanbul
+    items: ["Conference"]
+  - title: Hagia Sophia & Galata
+    base: Istanbul
+    stay: Meroddi Bağdatlıyan Hotel
+    items: ["Hagia Sophia & Basilica Cistern", "Galata Tower", "Evening by the Bosphorus"]
+  - title: Grand Bazaar & hamam
+    base: Istanbul
+    items: ["Grand Bazaar shopping", "Kılıç Ali Paşa Hamamı", "20:00 Istanbul → Mumbai"]
+  - title: Home
+    items: ["04:50 Mumbai, 5-hr layover", "12:00 Arrive Bangalore"]
+places:
+  - { name: Hotel Ilayda, type: stay, location: Kuşadası, notes: "Sea-front, walkable to the marina" }
+  - { name: Travellers Cave Hotel, type: stay, location: Göreme, notes: Proper cave room — balloon views from the terrace, favourite: true }
+  - { name: Meroddi Bağdatlıyan Hotel, type: stay, location: Istanbul, notes: "Sultanahmet, walk to Hagia Sophia" }
+  - { name: Hot air balloon, type: experience, location: Cappadocia, cost: 260, costMax: 320, currency: EUR, per: person, notes: "4–7 am, includes pickup, light breakfast & champagne. Smaller baskets (16 people) cost more.", favourite: true }
+  - { name: Sunset / balloon-time photo car tour, type: experience, location: Cappadocia, cost: 100, costMax: 300, currency: EUR, per: car, notes: "Car only €100, dress rental €50, with photographer €300" }
+  - { name: Jeep safari, type: activity, location: Cappadocia, cost: 30, currency: EUR, per: person, notes: "Pigeon valley, old Greek village, Ortahisar castle" }
+  - { name: Green Tour, type: activity, location: Cappadocia, cost: 70, currency: EUR, per: person, notes: "Derinkuyu underground city, Ihlara valley, Selime monastery, lunch by the river" }
+  - { name: Red Tour, type: activity, location: Cappadocia, cost: 70, currency: EUR, per: person, notes: "Göreme museum, Paşabağ fairy chimneys, Avanos pottery, Uçhisar castle", tried: false }
+  - { name: ATV safari, type: activity, location: Cappadocia, cost: 40, currency: EUR, per: ATV (2 people), notes: Rose & Love valleys at sunset }
+  - { name: Turkish night, type: experience, location: Cappadocia, cost: 50, currency: EUR, per: person, notes: "Folk dances, dinner, unlimited drinks" }
+  - { name: Whirling dervishes ceremony, type: experience, location: Cappadocia, cost: 30, currency: EUR, per: person, tried: false }
+  - { name: Ephesus, type: activity, location: Selçuk }
+  - { name: Şirince village, type: activity, location: Selçuk, notes: Fruit wines and a slow lunch }
+  - { name: Hagia Sophia, type: activity, location: Istanbul }
+  - { name: Galata Tower, type: activity, location: Istanbul }
+  - { name: Kılıç Ali Paşa Hamamı, type: experience, location: Istanbul, notes: Mimar Sinan's restored 16th-century hamam, favourite: true }
+  - { name: Grand Bazaar, type: activity, location: Istanbul }
+  - { name: Flixbus / Metro Turizm overnight buses, type: operator, notes: Comfortable and saves a hotel night }
+tips:
+  - "Indian passports need a sticker visa: book a VFS appointment and bring bank statements (6 months), salary slips, ITR, a leave NOC and an undertaking letter."
+  - Download BiTaksi for Istanbul and Entaksi for Izmir, plus Flixbus.
+  - Overnight buses between Kuşadası, Cappadocia and Istanbul save money and a night's hotel.
+  - Balloon flights get cancelled for wind, so keep a backup morning in Cappadocia if you can.
+checklist: [Visa, Bank statement & ITR copies, Travel insurance, BiTaksi app, Flixbus app, Offline maps]

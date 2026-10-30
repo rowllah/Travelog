@@ -1,0 +1,80 @@
+title: Andaman — Back for the dives
+country: India
+flag: 🇮🇳
+region: India — Islands
+destinations: [Port Blair, Havelock, Neil]
+startDate: 2024-10-13
+endDate: 2024-10-21
+company: Friends
+travellers: 1
+styles: [Beach, Diving, Islands, Adventure]
+localCurrency: INR
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Havelock%2C_Andaman_%26_Nicobar_Islands.JPG/1280px-Havelock%2C_Andaman_%26_Nicobar_Islands.JPG
+coverCredit: Havelock — Wikimedia Commons
+summary: >-
+  A tighter, dive-focused return to the Andamans: three days of diving off Havelock, night
+  kayaking through bioluminescence, then Neil for more dives before a sunset at Chidiya Tapu.
+highlights:
+  - Six dive days across Havelock and Neil
+  - Night kayaking and stargazing at Kalapathar
+  - Bharatpur beach at sunrise
+  - Chidiya Tapu sunset and the Port Blair museum
+bestTime: October–April
+budget:
+  travellers: 1
+  note: Island cabs are actual costs. The rest are typical costs for this route, marked as estimates.
+  items:
+    - { label: Return flights BLR–Port Blair, category: flights, amount: 14000, currency: INR, estimate: true }
+    - { label: Ferries (Makruzz), category: transport, amount: 4500, currency: INR, estimate: true }
+    - { label: "Island cabs (Port Blair, Havelock, Neil)", category: transport, amount: 10700, currency: INR }
+    - { label: Stays (8 nights), category: stay, amount: 32000, currency: INR, estimate: true }
+    - { label: Dives (~12), category: activities, amount: 36000, currency: INR, estimate: true }
+    - { label: Food, category: food, amount: 10000, currency: INR, estimate: true }
+days:
+  - title: Port Blair · Light show
+    base: Port Blair
+    stay: Hotel Atlanta Point
+    items: ["10:40 Depart BLR", "13:10 Arrive Port Blair, check in", "18:50 Cellular Jail light show"]
+  - title: Ferry to Havelock · Stargazing
+    base: Havelock
+    stay: SeaShell Havelock
+    items: ["11:30 Makruzz to Havelock", "13:00 Arrive, check in", "Kalapathar beach", "Stargazing"]
+  - title: Dive day 1 · Radhanagar
+    base: Havelock
+    items: ["06:30 Dive day 1", "Radhanagar sunset", "Night kayaking"]
+  - title: Dive day 2 · Elephant Beach
+    base: Havelock
+    items: ["06:30 Dive day 2", "Elephant Beach trek & water sports"]
+  - title: Dive day 3 · Ferry to Neil
+    base: Neil
+    stay: Dancing Dugong
+    items: ["06:30 Dive day 3", "14:00 Makruzz to Neil", "15:00 Check in", "Natural Bridge"]
+  - title: Neil dives
+    base: Neil
+    items: ["Dive day 4"]
+  - title: Bharatpur & Discover Scuba (for the newbies)
+    base: Neil
+    items: ["05:15 Bharatpur beach sunrise", "Dive day 5"]
+  - title: Final dives · Port Blair
+    base: Port Blair
+    stay: ITC Fortune Bay Island
+    items: ["05:15 Dive day 6", "11:00 Third dive", "Ferry to Port Blair", "Museum visit", "Chidiya Tapu sunset"]
+  - title: Fly home
+    items: ["12:00 Check out", "Fly to BLR, arrive 16:15"]
+places:
+  - { name: Hotel Atlanta Point, type: stay, location: Port Blair }
+  - { name: SeaShell Havelock, type: stay, location: Havelock, favourite: true }
+  - { name: Taj Exotica Havelock, type: stay, location: Havelock, notes: Splurge option on Radhanagar beach }
+  - { name: Dancing Dugong, type: stay, location: Neil }
+  - { name: Fortune Resort Bay Island (ITC), type: stay, location: Port Blair, notes: Sea-view rooms on the hill }
+  - { name: Night kayaking (bioluminescence), type: experience, location: Havelock, favourite: true }
+  - { name: Stargazing at Kalapathar, type: experience, location: Havelock }
+  - { name: Fun dives, type: activity, location: Havelock & Neil, cost: 3000, costMax: 3500, currency: INR, per: dive }
+  - { name: Discover Scuba Diving, type: activity, location: Neil, notes: Great intro for non-divers, cost: 4500, currency: INR, per: person }
+  - { name: Bharatpur beach, type: activity, location: Neil }
+  - { name: Chidiya Tapu sunset, type: activity, location: Port Blair }
+  - { name: Island cabs, type: operator, notes: Book one driver per island for the whole stay — works out cheapest, cost: 4250, currency: INR, per: island stay }
+tips:
+  - Hire one cab per island for your whole stay. We paid about ₹4,250 per island for all transfers.
+  - Dive mornings start at 06:30, so plan sunsets, not late nights.
+  - Keep a no-fly gap of at least 18 hours after your last dive.

@@ -1,0 +1,66 @@
+title: Lakshadweep — Agatti & Bangaram
+country: India
+flag: 🇮🇳
+region: India — Islands
+destinations: [Agatti, Bangaram, Kalpitti]
+company: Friends
+travellers: 1
+styles: [Beach, Diving, Islands]
+localCurrency: INR
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/A_beach_side_resort_at_Kadmat_Island%2C_Lakshadweep.jpg/1280px-A_beach_side_resort_at_Kadmat_Island%2C_Lakshadweep.jpg
+coverCredit: Kadmat Island, Lakshadweep — Wikimedia Commons
+summary: >-
+  India's quietest coral islands. Stay at a small beach resort on Agatti, dive with the local
+  dive shop, snorkel a shipwreck off Bangaram and kayak in a lagoon you'll have almost to
+  yourself. Permits take some planning, but the islands are worth it.
+highlights:
+  - Shipwreck snorkelling on the Bangaram day trip
+  - Diving with Ammathi Scuba
+  - Free kayaking in the lagoon
+  - Bioluminescence on the beach at night
+bestTime: October–May
+budget:
+  travellers: 1
+  note: Per-person prices from my notes for a 4-night stay. Change the number of days in the planner to scale it.
+  items:
+    - { label: Flights Kochi ⇄ Agatti, category: flights, amount: 12000, currency: INR }
+    - { label: Red Coral Beach Resort (4 nights incl. 3 meals & transfers), category: stay, amount: 20000, currency: INR }
+    - { label: Police verification certificate, category: visa, amount: 450, currency: INR }
+    - { label: Administrator entry permit (via local agent), category: visa, amount: 1000, currency: INR }
+    - { label: 2 dives with Ammathi Scuba, category: activities, amount: 10000, currency: INR }
+    - { label: Bangaram day trip, category: activities, amount: 3000, currency: INR }
+    - { label: Kalpitti island tour, category: activities, amount: 1500, currency: INR }
+    - { label: Snacks & meals outside the resort, category: food, amount: 2000, currency: INR, estimate: true }
+days:
+  - title: Fly Kochi → Agatti
+    base: Agatti
+    stay: Red Coral Beach Resort
+    items: ["Morning flight from Kochi", "Check in, beach and lagoon", "Lighthouse at sunset"]
+  - title: Dive day
+    base: Agatti
+    items: ["Two dives with Ammathi Scuba", "Kayaking in the lagoon", "Bioluminescence after dark"]
+  - title: Bangaram day trip
+    base: Agatti
+    items: ["Boat to Bangaram", "Shipwreck snorkelling", "Beach lunch"]
+  - title: Kalpitti island
+    base: Agatti
+    items: ["Kalpitti island tour", "Shawarma at Moula's"]
+  - title: Fly back to Kochi
+    items: ["Mandi at Fry King before the flight"]
+places:
+  - { name: Red Coral Beach Resort, type: stay, location: Agatti, notes: All meals and airport transfers included, cost: 5000, currency: INR, per: night, favourite: true }
+  - { name: Ammathi Scuba, type: operator, location: Agatti, cost: 5000, currency: INR, per: dive }
+  - { name: Bangaram shipwreck snorkelling, type: experience, location: Bangaram, cost: 3000, currency: INR, per: person, favourite: true }
+  - { name: Kalpitti island tour, type: activity, location: Kalpitti, cost: 1500, currency: INR, per: person }
+  - { name: Lighthouse, type: activity, location: Agatti, notes: Free }
+  - { name: Lagoon kayaking, type: activity, location: Agatti, notes: Free at the resort }
+  - { name: Bioluminescence on the beach, type: experience, location: Agatti }
+  - { name: Moula's, type: food, location: Agatti, notes: Shawarma }
+  - { name: Fry King, type: food, location: Agatti, notes: Mandi }
+  - { name: Safa Beach Restaurant, type: food, location: Agatti, notes: Snacks by the beach }
+tips:
+  - Get a Police Verification Certificate first (Karnataka residents can apply on Seva Sindhu for about ₹450).
+  - The administrator entry permit is arranged through a local agent or your resort, for about ₹1,000.
+  - The ship from Kochi (about ₹1k) is far cheaper than flying (about ₹6k one way) but runs on an irregular schedule.
+  - Alcohol isn't available on Agatti.
+checklist: [Police verification certificate, Entry permit, ID copies, Cash (few ATMs)]

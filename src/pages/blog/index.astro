@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url, formatDate } from '../../lib/site';
+
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
+const trips = await getCollection('trips');
+const tripById = new Map(trips.map((t) => [t.id, t]));
+---
+
+<Base title="Journal" description="Stories, lessons and longer notes from my trips.">
+  <section class="hero" style="padding-bottom:1.5rem">
+    <div class="narrow">
+      <p class="eyebrow">Journal</p>
+      <h1>Stories from the road</h1>
+      <p class="lead">The longer stuff — what went right, what went wrong, and what I'd do differently.</p>
+      <a class="btn btn-small" href={url('/add#blog')}>✍️ Write a new post</a>
+    </div>
+  </section>
+  <section class="narrow">
+    <div class="post-list">
+      {
+        posts.map((p) => {
+          const trip = p.data.trip ? tripById.get(p.data.trip) : undefined;
+          const cover = p.data.cover ?? trip?.data.cover;
+          return (
+            <a class="post-card" href={url(`/blog/${p.id}`)}>
+              <div class="post-card-media" style={cover ? `background-image:url('${cover}')` : undefined} />
+              <div class="post-card-body">
+                <p class="eyebrow">
+                  {formatDate(p.data.date)}
+                  {trip && ` · ${trip.data.flag} ${trip.data.country}`}
+                </p>
+                <h3>{p.data.title}</h3>
+                {p.data.excerpt && <p class="muted clamp-2">{p.data.excerpt}</p>}
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+</Base>

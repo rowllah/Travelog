@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+import { SITE, url, GITHUB_REPO_URL } from '../lib/site';
+import { buildRates, CURRENCIES } from '../lib/fx';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+const { title, description = SITE.tagline, image } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.owner}'s ${SITE.title}` : `${SITE.owner}'s ${SITE.title}`;
+const fx = await buildRates();
+const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const nav = [
+  { href: '/', label: 'Trips' },
+  { href: '/explore', label: 'Explore' },
+  { href: '/plan', label: 'Plan a trip' },
+  { href: '/blog', label: 'Journal' },
+  { href: '/toolkit', label: 'Toolkit' },
+];
+const active = (href: string) => (href === '/' ? path === '/' || path.startsWith('/trips') : path.startsWith(href));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    {image && <meta property="og:image" content={image} />}
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script id="fx-fallback" type="application/json" set:html={JSON.stringify(fx)} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href={url('/')}>
+          <span class="brand-mark">✈︎</span>
+          <span>{SITE.owner}'s <em>{SITE.title}</em></span>
+        </a>
+        <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+        <nav class="site-nav">
+          {nav.map((n) => <a href={url(n.href)} class:list={{ active: active(n.href) }}>{n.label}</a>)}
+          <a href={url('/add')} class:list={['btn btn-small', { active: active('/add') }]}>+ Add trip</a>
+          <label class="currency-picker" title="Show all prices in this currency (live rates)">
+            <span class="sr-only">Currency</span>
+            <select id="currency-select">
+              {CURRENCIES.map((c) => <option value={c}>{c}</option>)}
+            </select>
+          </label>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p>Made with sand in my shoes by {SITE.owner}. Prices are approximate and converted at <span data-fx-status>build-time rates</span>.</p>
+        <p>
+          <a href={GITHUB_REPO_URL}>Source on GitHub</a> · <a href={url('/add')}>Add a trip</a> ·
+          <a href={url('/toolkit')}>Packing toolkit</a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      import { applyMoney, getCurrency, refreshRates, setCurrency } from '../scripts/currency';
+
+      const select = document.getElementById('currency-select') as HTMLSelectElement;
+      select.value = getCurrency();
+      select.addEventListener('change', () => setCurrency(select.value));
+      window.addEventListener('currencychange', () => applyMoney());
+      window.addEventListener('rateschange', () => applyMoney());
+      applyMoney();
+      refreshRates();
+
+      const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
+      toggle.addEventListener('click', () => {
+        const open = document.body.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    </script>
+  </body>
+</html>

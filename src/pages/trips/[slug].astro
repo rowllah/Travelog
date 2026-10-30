@@ -1,0 +1,302 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Money from '../../components/Money.astro';
+import {
+  url, tripDays, tripWhen, dayDate, splitTime, perPersonBudget, PLACE_LABELS, BUDGET_LABELS, GITHUB_REPO_URL, SITE, formatDate, type Trip,
+} from '../../lib/site';
+import { buildRates, convert } from '../../lib/fx';
+
+export async function getStaticPaths() {
+  const trips = await getCollection('trips');
+  return trips.map((trip) => ({ params: { slug: trip.id }, props: { trip } }));
+}
+
+const { trip } = Astro.props as { trip: Trip };
+const d = trip.data;
+const days = tripDays(trip);
+const posts = (await getCollection('blog', (p) => p.data.trip === trip.id && !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
+const pp = perPersonBudget(trip);
+const ppSum = pp.map((i) => [i.amount, i.currency] as [number, string]);
+const hasEstimates = pp.some((i) => i.estimate);
+
+const { rates } = await buildRates();
+const COLORS: Record<string, string> = {
+  flights: '#0f766e', visa: '#7c8b90', insurance: '#a3b1b5', stay: '#e2674a', food: '#c99a2e', transport: '#5fb3a6',
+  activities: '#3d5a80', shopping: '#b56576', package: '#6d597a', other: '#cbbfa9',
+};
+const byCat = new Map<string, number>();
+for (const i of pp) byCat.set(i.category, (byCat.get(i.category) ?? 0) + convert(i.amount, i.currency, 'INR', rates));
+const catTotal = [...byCat.values()].reduce((a, b) => a + b, 0) || 1;
+
+const placeTypes = Object.keys(PLACE_LABELS).filter((k) => d.places.some((p) => p.type === k));
+const editUrl = `${GITHUB_REPO_URL}/edit/${SITE.github.branch}/src/content/trips/${trip.id}.yaml`;
+const uploadUrl = `${GITHUB_REPO_URL}/upload/${SITE.github.branch}/public/photos/${trip.id}`;
+---
+
+<Base title={d.title} description={d.summary} image={d.cover}>
+  <section class="trip-hero" style={d.cover ? `background-image:url('${d.cover}')` : undefined}>
+    <div class="wrap">
+      <p class="eyebrow">{d.flag} {d.country} · {tripWhen(trip)}</p>
+      <h1>{d.title}</h1>
+      <div class="chips">{d.styles.map((s) => <span class="chip">{s}</span>)}</div>
+    </div>
+    {d.coverCredit && <span class="credit">Photo: {d.coverCredit}</span>}
+  </section>
+
+  <div class="wrap">
+    <div class="facts">
+      <div class="fact"><span>Duration</span><strong>{days ? `${days} days` : 'Flexible'}</strong></div>
+      <div class="fact"><span>Travelled with</span><strong>{d.company ?? '—'}{d.travellers > 1 ? ` (${d.travellers})` : ''}</strong></div>
+      <div class="fact"><span>Route</span><strong>{d.destinations.slice(0, 3).join(' → ')}{d.destinations.length > 3 ? '…' : ''}</strong></div>
+      <div class="fact"><span>Local currency</span><strong>{d.localCurrency}</strong></div>
+      {ppSum.length > 0 && <div class="fact"><span>Approx. per person</span><strong><Money sum={ppSum} /></strong></div>}
+    </div>
+  </div>
+
+  <nav class="subnav no-print">
+    <div class="wrap">
+      <a href="#overview">Overview</a>
+      {d.days.length > 0 && <a href="#itinerary">Itinerary</a>}
+      {d.places.length > 0 && <a href="#places">Hotels, food & things to do</a>}
+      {pp.length > 0 && <a href="#budget">Budget</a>}
+      {d.tips.length > 0 && <a href="#tips">Tips</a>}
+      <a href="#photos">Photos</a>
+      {posts.length > 0 && <a href="#journal">Journal</a>}
+    </div>
+  </nav>
+
+  <div class="wrap section">
+    <div class="two-col">
+      <div>
+        <section id="overview">
+          <p style="font-size:1.15rem">{d.summary}</p>
+          {
+            d.highlights.length > 0 && (
+              <>
+                <h3>Highlights</h3>
+                <ul class="highlights">{d.highlights.map((h) => <li>{h}</li>)}</ul>
+              </>
+            )
+          }
+          {d.bestTime && <p style="margin-top:1rem"><strong>Best time to go:</strong> <span class="muted">{d.bestTime}</span></p>}
+        </section>
+
+        {
+          d.days.length > 0 && (
+            <section id="itinerary" class="section" style="padding-bottom:0">
+              <div class="section-head">
+                <h2>Day by day</h2>
+                <a class="btn btn-coral btn-small no-print" href={url(`/plan?trip=${trip.id}`)}>Use this itinerary →</a>
+              </div>
+              <div class="days">
+                {d.days.map((day, i) => (
+                  <article class="day">
+                    <div class="day-num">
+                      {i + 1}
+                      <small>{dayDate(trip, i) || 'Day'}</small>
+                    </div>
+                    <div>
+                      <h3>{day.title}</h3>
+                      {(day.base || day.stay) && (
+                        <div class="day-meta">
+                          {day.base && <span>📍 {day.base}</span>}
+                          {day.stay && <span>🛏️ {day.stay}</span>}
+                        </div>
+                      )}
+                      <ul>
+                        {day.items.map((line) => {
+                          const { time, text } = splitTime(line);
+                          return (
+                            <li>
+                              <time>{time}</time>
+                              <span>{text}</span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        {
+          d.places.length > 0 && (
+            <section id="places" class="section" style="padding-bottom:0">
+              <h2>Hotels, food & things to do</h2>
+              <p class="muted">⭐ marks my favourites. "Wishlist" means it was on my list but I didn't get to it.</p>
+              <div class="filters-row chips no-print" id="place-filters" style="margin-bottom:1rem">
+                <button class="chip" type="button" aria-pressed="true" data-type="">All ({d.places.length})</button>
+                {placeTypes.map((k) => (
+                  <button class="chip" type="button" aria-pressed="false" data-type={k}>
+                    {PLACE_LABELS[k].icon} {PLACE_LABELS[k].label} ({d.places.filter((p) => p.type === k).length})
+                  </button>
+                ))}
+                <button class="chip" type="button" aria-pressed="false" data-fav>⭐ Favourites</button>
+              </div>
+              <div class="place-grid" id="place-grid">
+                {d.places.map((p) => (
+                  <div class="place" data-type={p.type} data-fav={p.favourite ? '1' : ''}>
+                    <div class="place-top">
+                      <span class="place-type">{PLACE_LABELS[p.type].icon} {PLACE_LABELS[p.type].label}</span>
+                      {p.favourite && <span class="badge badge-fav">⭐ Favourite</span>}
+                      {!p.tried && <span class="badge badge-wish">Wishlist</span>}
+                    </div>
+                    <h4>{p.name}</h4>
+                    {p.location && <p class="muted">📍 {p.location}</p>}
+                    {p.notes && <p>{p.notes}</p>}
+                    {p.cost !== undefined && (
+                      <p class="place-cost">
+                        <Money amount={p.cost} max={p.costMax} currency={p.currency ?? d.localCurrency} />
+                        {p.per && <span class="muted"> / {p.per}</span>}
+                      </p>
+                    )}
+                    {p.link && <a class="link" href={p.link} target="_blank" rel="noopener">View / book ↗</a>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        {
+          d.tips.length > 0 && (
+            <section id="tips" class="section" style="padding-bottom:0">
+              <h2>Things I'd tell a friend</h2>
+              <ul class="tips">{d.tips.map((t) => <li>{t}</li>)}</ul>
+              {d.checklist.length > 0 && (
+                <>
+                  <h3 style="margin-top:1.5rem">Don't forget</h3>
+                  <div class="chips">{d.checklist.map((c) => <span class="chip">✓ {c}</span>)}</div>
+                </>
+              )}
+            </section>
+          )
+        }
+
+        <section id="photos" class="section" style="padding-bottom:0">
+          <h2>Photos</h2>
+          {
+            d.photos.length ? (
+              <div class="gallery">
+                {d.photos.map((p) => (
+                  <figure>
+                    <img src={p.src.startsWith('http') ? p.src : url(p.src)} alt={p.caption ?? d.title} loading="lazy" />
+                    {p.caption && <figcaption>{p.caption}</figcaption>}
+                  </figure>
+                ))}
+              </div>
+            ) : (
+              <div class="empty">
+                <p>No photos added yet.</p>
+                <a class="btn btn-ghost btn-small no-print" href={uploadUrl} target="_blank" rel="noopener">Upload photos on GitHub ↗</a>
+              </div>
+            )
+          }
+        </section>
+
+        {
+          posts.length > 0 && (
+            <section id="journal" class="section" style="padding-bottom:0">
+              <h2>From the journal</h2>
+              <div class="post-list">
+                {posts.map((p) => (
+                  <a class="card" href={url(`/blog/${p.id}`)} style="text-decoration:none;color:inherit">
+                    <p class="eyebrow">{formatDate(p.data.date)}</p>
+                    <h3>{p.data.title}</h3>
+                    {p.data.excerpt && <p class="muted">{p.data.excerpt}</p>}
+                  </a>
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </div>
+
+      <aside class="stack sticky" id="budget">
+        {
+          pp.length > 0 && (
+            <div class="card">
+              <p class="eyebrow">Approximate budget · per person</p>
+              <div class="total-big"><Money sum={ppSum} /></div>
+              <p class="muted" style="font-size:.85rem">
+                ≈ <Money sum={ppSum} to={d.localCurrency} /> locally ·{' '}
+                <span data-fx-status />
+              </p>
+              <div class="bar">
+                {[...byCat].map(([cat, v]) => (
+                  <span style={`width:${(v / catTotal) * 100}%;background:${COLORS[cat]}`} title={BUDGET_LABELS[cat]} />
+                ))}
+              </div>
+              <div class="legend">
+                {[...byCat].map(([cat, v]) => (
+                  <span>
+                    <i style={`background:${COLORS[cat]}`} />
+                    {BUDGET_LABELS[cat]} {Math.round((v / catTotal) * 100)}%
+                  </span>
+                ))}
+              </div>
+              <table class="budget" style="margin-top:1rem">
+                <tbody>
+                  {pp.map((i) => (
+                    <tr>
+                      <td>
+                        {i.label} {i.estimate && <span class="badge badge-est">est.</span>}
+                      </td>
+                      <td>
+                        <Money amount={i.amount} currency={i.currency} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Total</td>
+                    <td><Money sum={ppSum} /></td>
+                  </tr>
+                </tfoot>
+              </table>
+              {d.budget?.note && <p class="muted" style="font-size:.82rem;margin-top:.8rem">{d.budget.note}</p>}
+              {hasEstimates && <p class="muted" style="font-size:.78rem">Items marked <span class="badge badge-est">est.</span> are my best estimates, not recorded spends.</p>}
+              <p class="muted" style="font-size:.78rem">Hover over any amount to see the original currency.</p>
+              <a class="btn" style="width:100%;justify-content:center" href={url(`/plan?trip=${trip.id}`)}>Plan this trip for my group →</a>
+            </div>
+          )
+        }
+        <div class="card no-print">
+          <h3>Keep this trip up to date</h3>
+          <p class="muted" style="font-size:.9rem">Fix details, add photos or write about it.</p>
+          <div class="stack" style="gap:.5rem">
+            <a class="btn btn-ghost btn-small" href={editUrl} target="_blank" rel="noopener">✏️ Edit trip on GitHub</a>
+            <a class="btn btn-ghost btn-small" href={uploadUrl} target="_blank" rel="noopener">📷 Upload photos</a>
+            <a class="btn btn-ghost btn-small" href={url(`/add?blog=${trip.id}#blog`)}>📝 Write a journal post</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const btns = [...document.querySelectorAll<HTMLButtonElement>('#place-filters button')];
+  const items = [...document.querySelectorAll<HTMLElement>('#place-grid .place')];
+  let type = '';
+  let fav = false;
+  function apply() {
+    items.forEach((el) => (el.hidden = !((!type || el.dataset.type === type) && (!fav || el.dataset.fav))));
+    btns.forEach((b) => {
+      if (b.hasAttribute('data-fav')) b.setAttribute('aria-pressed', String(fav));
+      else b.setAttribute('aria-pressed', String(b.dataset.type === type));
+    });
+  }
+  btns.forEach((b) =>
+    b.addEventListener('click', () => {
+      if (b.hasAttribute('data-fav')) fav = !fav;
+      else type = b.dataset.type ?? '';
+      apply();
+    }),
+  );
+</script>

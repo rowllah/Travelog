@@ -1,0 +1,95 @@
+title: Vietnam — Hanoi to Saigon
+country: Vietnam
+flag: 🇻🇳
+region: Southeast Asia
+destinations: [Hanoi, Ha Long Bay, Ninh Binh, Da Nang, Ba Na Hills, Hoi An, Ho Chi Minh City, Mekong Delta, Cu Chi]
+startDate: 2025-10-10
+endDate: 2025-10-20
+company: Friends
+travellers: 4
+styles: [Culture, City, Nature, Food]
+localCurrency: VND
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ha_Long_Bay_in_2019.jpg/1280px-Ha_Long_Bay_in_2019.jpg
+coverCredit: Ha Long Bay — Wikimedia Commons
+summary: >-
+  Ten days top to bottom with friends: Hanoi's old quarter and train street, a Ha Long Bay
+  cruise and the karsts of Ninh Binh, then Da Nang with the Golden Bridge and lantern-lit Hoi
+  An, and finally Saigon, the Mekong Delta and the Cu Chi tunnels.
+highlights:
+  - Ha Long Bay cruise with kayaking into Luon Cave
+  - Boat ride through Trang An, Ninh Binh
+  - Golden Bridge at Ba Na Hills
+  - Hoi An old town and the flower lantern release
+  - Mekong Delta and the Cu Chi tunnels
+bestTime: October–April. In October the north is cool (20–27 °C), the centre wet, the south warm.
+budget:
+  travellers: 1
+  note: Actual cost per person.
+  items:
+    - { label: "Flights (VietJet BLR–HCMC–Hanoi, internal, HCMC–BLR)", category: flights, amount: 42000, currency: INR }
+    - { label: "Hotels, transfers & day tours (package)", category: package, amount: 66800, currency: INR }
+    - { label: e-Visa (USD 25 + fees), category: visa, amount: 2315, currency: INR }
+    - { label: Spending money (forex), category: food, amount: 20000, currency: INR }
+    - { label: Immigration fast-track, category: other, amount: 2443, currency: INR }
+    - { label: Tips for guides & drivers, category: other, amount: 2375, currency: INR }
+days:
+  - title: Night flight via Ho Chi Minh City
+    items: ["23:35 BLR departure (VietJet)"]
+  - title: Hanoi · Old Quarter
+    base: Hanoi
+    stay: T Boutique Hotel
+    items: ["06:00 Arrive HCMC, 11:50 on to Hanoi", "14:00 Arrive Hanoi, check in", "15:30 Ho Chi Minh Mausoleum, Presidential Palace, One Pillar Pagoda, Hoan Kiem Lake, Train Street, Book Street"]
+  - title: Ha Long Bay
+    base: Hanoi
+    items: ["07:30 Ha Long Bay day cruise with lunch", "Fighting Cock islets, Sung Sot cave", "Kayak or bamboo boat into Luon Cave"]
+  - title: Ninh Binh
+    base: Hanoi
+    items: ["07:30 Ninh Binh day trip — Hoa Lu ancient capital, Trang An boat ride"]
+  - title: Fly to Da Nang · Marble Mountains
+    base: Da Nang
+    stay: Cicilia Hotel
+    items: ["11:50 Hanoi → Da Nang", "13:10 Arrive, check in", "15:00 Marble Mountains & Son Tra peninsula (Lady Buddha)"]
+  - title: Ba Na Hills
+    base: Da Nang
+    items: ["08:00 Ba Na Hills — cable car, Golden Bridge, French Village"]
+  - title: Hoi An
+    base: Da Nang
+    items: ["14:00 Hoi An old town — Assembly Halls, old houses, market", "Hoi An Silk Village", "Cam Thanh coconut village — basket boats on the Cua Dai river", "Flower lantern release on the river"]
+  - title: Fly to Saigon
+    base: Ho Chi Minh City
+    stay: Vissai Saigon Hotel
+    items: ["11:10 Da Nang → HCMC", "14:00 Independence Palace, War Remnants Museum, Notre-Dame Cathedral, Central Post Office"]
+  - title: Mekong Delta
+    base: Ho Chi Minh City
+    items: ["08:00 Mekong Delta day trip — island visit, coconut candy, bee farm, Vinh Trang pagoda"]
+  - title: Cu Chi Tunnels
+    base: Ho Chi Minh City
+    items: ["09:00 Cu Chi tunnels", "Afternoon shopping — Ben Thanh market", "Spa (Temple Leaf)"]
+  - title: Fly home
+    items: ["Free morning", "19:20 HCMC → BLR, arrive 22:35"]
+places:
+  - { name: T Boutique Hotel, type: stay, location: Hanoi, notes: Old Quarter location }
+  - { name: Cicilia Hotel, type: stay, location: Da Nang, notes: Near My Khe beach }
+  - { name: Vissai Saigon Hotel, type: stay, location: Ho Chi Minh City }
+  - { name: Ha Long Bay day cruise, type: experience, location: Ha Long, favourite: true }
+  - { name: Trang An boat ride, type: experience, location: Ninh Binh, favourite: true }
+  - { name: Train Street, type: activity, location: Hanoi }
+  - { name: Ba Na Hills & Golden Bridge, type: activity, location: Da Nang, notes: Go early — it gets packed by 10 am }
+  - { name: Marble Mountains, type: activity, location: Da Nang }
+  - { name: Hoi An lantern release, type: experience, location: Hoi An, favourite: true }
+  - { name: Cam Thanh basket boats, type: experience, location: Hoi An }
+  - { name: War Remnants Museum, type: activity, location: Ho Chi Minh City }
+  - { name: Mekong Delta day trip, type: activity, location: Mekong }
+  - { name: Cu Chi tunnels, type: activity, location: Cu Chi }
+  - { name: Temple Leaf Sauna & Spa, type: experience, location: Ho Chi Minh City }
+  - { name: "Hanoi street food — pho, bun cha, egg coffee", type: food, location: Hanoi, favourite: true }
+  - { name: Banh mi in Hoi An, type: food, location: Hoi An }
+  - { name: PickYourTrail Vietnam guide, type: operator, link: "https://pickyourtrail.com/tourism/vietnam" }
+  - { name: Zostel — Experience Vietnam trip, type: operator, link: "https://www.zostel.com/trips/experience-vietnam-TR-C8886C5M/" }
+tips:
+  - An e-visa is mandatory (USD 25 single entry, 3–7 days to process). Apply 2–3 weeks ahead with a 4×6 cm white-background photo.
+  - Carry USD and change into VND locally. ₹1 is roughly 300 VND.
+  - No shorts in temples. Pack a light rain jacket for central Vietnam in October.
+  - Grab is the easiest way to get around every city.
+  - Turn on international transactions on your cards and set up an international SIM before you fly.
+checklist: [e-Visa, Passport photos, USD cash, Grab app, Rain jacket, Offline maps]

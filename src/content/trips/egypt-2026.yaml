@@ -1,0 +1,124 @@
+title: Egypt — Red Sea liveaboard, Luxor, Aswan & Cairo
+country: Egypt
+flag: 🇪🇬
+region: Africa & Middle East
+destinations: [Cairo, Port Ghalib, Brothers & Daedalus (Red Sea), Hurghada, Luxor, Aswan, Abu Simbel, Giza]
+startDate: 2026-06-04
+endDate: 2026-06-21
+company: Friend (dive buddy)
+travellers: 2
+styles: [Diving, Culture, History, Adventure]
+localCurrency: EGP
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Pyramids_of_the_Giza_Necropolis.jpg/1280px-Pyramids_of_the_Giza_Necropolis.jpg
+coverCredit: Pyramids of Giza — Wikimedia Commons
+summary: >-
+  Two and a half weeks combining a week-long Red Sea liveaboard (Brothers, Daedalus and
+  Elphinstone — sharks!) with a classic Nile run: hot air balloon in Luxor, a felucca in Aswan,
+  Abu Simbel, and the Pyramids plus the Grand Egyptian Museum to finish.
+highlights:
+  - Oceanic white-tips and hammerheads at Brothers, Daedalus and Elphinstone
+  - Aida and Numidia shipwrecks
+  - Dawn hot air balloon over the Valley of the Kings
+  - Felucca sunset on the Nile and a Nubian village
+  - Giza at opening time, then the Grand Egyptian Museum
+bestTime: October–April for sightseeing. June works for diving but Luxor and Aswan go past 40 °C.
+budget:
+  travellers: 1
+  note: My actual per-person costs. Hotels and the Emo Tours package were split between two people.
+  items:
+    - { label: Flights BLR–Cairo (Air Arabia via Sharjah), category: flights, amount: 27899, currency: INR }
+    - { label: Flights Cairo–BLR (Qatar via Doha), category: flights, amount: 22548, currency: INR }
+    - { label: Egypt visa, category: visa, amount: 3700, currency: INR }
+    - { label: Travel + dive insurance (shared policy), category: insurance, amount: 1281, currency: INR }
+    - { label: "MV Blue Horizon liveaboard (7 nights, full board, ~18 dives)", category: activities, amount: 1550, currency: EUR }
+    - { label: Liveaboard fuel surcharge & park fees, category: activities, amount: 5500, currency: INR }
+    - { label: "Emo Tours — transfers, guides, balloon, tours, train (my share)", category: package, amount: 875, currency: USD }
+    - { label: Carlton Downtown Cairo, category: stay, amount: 3573, currency: INR }
+    - { label: Iberotel Luxor (my share), category: stay, amount: 8544, currency: INR }
+    - { label: Obelisk Nile Aswan (my share), category: stay, amount: 10454, currency: INR }
+    - { label: Nozol Pyramids Giza (my share), category: stay, amount: 13788, currency: INR }
+    - { label: Food outside the liveaboard, category: food, amount: 150, currency: USD, estimate: true }
+days:
+  - title: Fly to Cairo · Downtown walk
+    base: Cairo
+    stay: Carlton Downtown
+    items: ["04:25 Depart BLR, via Sharjah", "10:45 Arrive Cairo", "Afternoon check in", "Night walk around downtown"]
+  - title: Khan el-Khalili & Zamalek
+    base: Cairo
+    items: ["Afternoon — Khan el-Khalili bazaar & Al-Muizz Street (spices, lanterns, tea, street food)", "Evening — Zamalek island cafés and bookshops"]
+  - title: Drive to Port Ghalib · Board the liveaboard
+    base: Red Sea
+    stay: MV Blue Horizon
+    items: ["05:00 Drive Cairo → Port Ghalib (~5.5 hrs via Ain Sokhna)", "11:30 Lunch at the marina", "18:00 Board MV Blue Horizon — briefing, kit check, welcome dinner"]
+  - title: Brothers Islands
+    base: Red Sea
+    items: ["Big & Little Brother — Aida and Numidia wrecks", "3 dives, oceanic white-tips"]
+  - title: Daedalus Reef · day 1
+    base: Red Sea
+    items: ["Deep wall dives, 3 dives + possible night dive", "Hammerheads possible"]
+  - title: Daedalus Reef · day 2
+    base: Red Sea
+    items: ["Blue-water dives — thresher sharks at dawn if you're lucky"]
+  - title: Elphinstone Reef
+    base: Red Sea
+    items: ["3 dives on a stunning wall — oceanic white-tips & hammerheads"]
+  - title: Elphinstone · sail north
+    base: Red Sea
+    items: ["3 dives, overnight sail towards Hurghada"]
+  - title: Last dives · Hurghada
+    base: Red Sea
+    items: ["Final 2 dives", "Arrive Hurghada, farewell dinner on board"]
+  - title: Disembark · Transfer to Luxor
+    base: Luxor
+    stay: Iberotel by JAZ (Nile view)
+    items: ["Morning disembark in Hurghada", "Transfer to Luxor (~3.5 hrs)", "Evening stroll on the Luxor Corniche for the Nile sunset"]
+  - title: Balloon at dawn · West Bank
+    base: Luxor
+    items: ["05:30 Hot air balloon over the Valley of the Kings", "West Bank tour — Valley of the Kings, Hatshepsut Temple, Colossi of Memnon"]
+  - title: Karnak · Drive to Aswan
+    base: Aswan
+    stay: Obelisk Nile Hotel
+    items: ["Morning — Karnak, the largest temple complex in the world", "Drive to Aswan (~3 hrs)", "Felucca sunset ride + Nubian village", "Aswan souk — spices, Nubian crafts, hibiscus tea"]
+  - title: Abu Simbel · Night train
+    base: Train
+    items: ["Very early start for Abu Simbel day tour", "Night train Aswan → Cairo"]
+  - title: Islamic Cairo · Nile dinner cruise
+    base: Giza
+    stay: Nozol Pyramids
+    items: ["Arrive Cairo, check in at Giza", "Citadel of Saladin, Al-Azhar & Sultan Hassan mosques", "Nile dinner cruise with tanoura dance"]
+  - title: Pyramids & Egyptian Museum
+    base: Giza
+    items: ["Opening time — Giza Pyramids & the Sphinx (beat the heat and crowds; camel optional)", "Afternoon — Egyptian Museum, Tahrir"]
+  - title: Grand Egyptian Museum
+    base: Giza
+    items: ["Full day at the GEM — Tutankhamun galleries", "Final dinner & shopping"]
+  - title: Fly home
+    items: ["10:30 Check out", "14:10 Depart Cairo via Doha, home at 02:30"]
+places:
+  - { name: Carlton Downtown, type: stay, location: Cairo, notes: "Budget-friendly, walkable to downtown" }
+  - { name: MV Blue Horizon, type: stay, location: Red Sea, notes: Liveaboard booked through India Scuba Network, favourite: true }
+  - { name: Iberotel by JAZ, type: stay, location: Luxor, notes: Nile-view rooms }
+  - { name: Obelisk Nile Hotel, type: stay, location: Aswan }
+  - { name: Nozol Pyramids, type: stay, location: Giza, notes: Pyramid views from the roof }
+  - { name: Sofitel Winter Palace, type: stay, location: Luxor, notes: Splurge option, tried: false }
+  - { name: Old Cataract Hotel, type: stay, location: Aswan, notes: Splurge option, tried: false }
+  - { name: "Red Sea liveaboard — Brothers, Daedalus, Elphinstone", type: experience, location: Red Sea, cost: 1550, currency: EUR, per: person / week, favourite: true }
+  - { name: Hot air balloon over Luxor West Bank, type: experience, location: Luxor, notes: Book early — very limited spots, favourite: true }
+  - { name: Felucca sunset ride, type: experience, location: Aswan }
+  - { name: Nile dinner cruise with tanoura show, type: experience, location: Cairo }
+  - { name: Valley of the Kings & Hatshepsut Temple, type: activity, location: Luxor }
+  - { name: Karnak Temple, type: activity, location: Luxor, notes: The sound & light show is worth it too }
+  - { name: Abu Simbel, type: activity, location: Aswan, notes: 3 am start by road or a short flight }
+  - { name: Philae Temple, type: activity, location: Aswan, tried: false }
+  - { name: Giza Pyramids & Sphinx, type: activity, location: Giza }
+  - { name: Grand Egyptian Museum (GEM), type: activity, location: Giza, notes: Give it a full day — book online }
+  - { name: Khan el-Khalili & Al-Muizz Street, type: activity, location: Cairo }
+  - { name: India Scuba Network, type: operator, notes: Organised the liveaboard; recommends DiveAssure insurance }
+  - { name: Emo Tours, type: operator, notes: "Handled transfers, guides and tours on land" }
+tips:
+  - Apply for the e-visa at visa2egypt.gov.eg well in advance.
+  - Get dive-specific insurance (e.g. DiveAssure) for a liveaboard; normal travel cover usually excludes it.
+  - Do Giza at opening time; by 11 am in June it's brutal.
+  - Book the Luxor balloon and the GEM online early.
+  - Long road transfers (Cairo–Port Ghalib, Hurghada–Luxor) are cheaper than flights and fine with a private cab.
+checklist: [e-Visa, Dive insurance, Dive logbook & certification card, Reef-safe sunscreen, Sea-sickness tablets]

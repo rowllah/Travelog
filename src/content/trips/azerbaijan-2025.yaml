@@ -1,0 +1,133 @@
+title: Azerbaijan — Baku, Shahdag & Gabala
+country: Azerbaijan
+flag: 🇦🇿
+region: Caucasus & Middle East
+destinations: [Baku, Gobustan, Shahdag, Gabala]
+startDate: 2025-04-04
+endDate: 2025-04-13
+company: Family
+travellers: 5
+styles: [City, Mountains, Culture, Food, Family]
+localCurrency: AZN
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Baku_city_at_night.jpg/1280px-Baku_city_at_night.jpg
+coverCredit: Baku at night — Wikimedia Commons
+summary: >-
+  Nine days split between Baku's futuristic skyline and old walled city, the mud volcanoes and
+  rock art of Gobustan, snow at Shahdag and the forests and lakes of Gabala. Easy e-visa,
+  short flights via Sharjah and great food.
+highlights:
+  - Heydar Aliyev Center and the Flame Towers lit up at night
+  - Gobustan rock art, bubbling mud volcanoes and the eternal fire at Yanar Dag
+  - Cable car, snow and the mountain coaster at Shahdag
+  - Nohur Lake and the Tufandag cable car in Gabala
+  - A proper hamam on the last day
+bestTime: April–June and September–October (Shahdag has snow into April)
+budget:
+  travellers: 1
+  note: >-
+    Flights and visa are per person. On-ground spends are the actual group spend (AZN 5,414 for 5)
+    divided per person. Hotels weren't recorded, so they are an estimate.
+  items:
+    - { label: Return flights BLR–Baku via Sharjah, category: flights, amount: 35000, currency: INR }
+    - { label: e-Visa, category: visa, amount: 2100, currency: INR }
+    - { label: "Hotels (Baku, Shahdag, Gabala — 8 nights, shared room)", category: stay, amount: 360, currency: USD, estimate: true }
+    - { label: Food & cafés, category: food, amount: 692, currency: AZN }
+    - { label: "Activities, entries, drivers & tips", category: activities, amount: 300, currency: AZN }
+    - { label: Shopping & souvenirs, category: shopping, amount: 90, currency: AZN }
+days:
+  - title: Fly in · Baku architecture & city walk
+    base: Baku
+    stay: Courtyard by Marriott Baku
+    items:
+      - "04:20 Flight from Bangalore, change at Sharjah"
+      - "10:40 Arrive Baku, check in"
+      - "14:00 Heydar Aliyev Center — Zaha Hadid's flowing building"
+      - "15:30 City walk — Nizami Street, Boulevard Park, Flame Towers, Crystal Hall, Carpet Museum, Little Venice boat ride"
+      - "20:00 Dinner at a dolma place"
+  - title: Gobustan, mud volcanoes & Yanar Dag
+    base: Baku
+    items:
+      - "09:00 Day trip south to Gobustan"
+      - "13:00 Gobustan rock art museum & mud volcanoes"
+      - "14:00 Lunch at a local restaurant"
+      - "15:00 Yanar Dag — the burning mountain"
+      - "19:30 Dinner at Sumakh"
+  - title: Into the mountains — Shahdag
+    base: Shahdag
+    stay: Shahdag Hotel & Spa
+    items:
+      - "08:00 Transfer to Shahdag (~3.5 hrs)"
+      - "14:00 Cable car, snow, mountain coaster & quad bikes"
+      - "20:00 Dinner and rest"
+  - title: Back to Baku · Malls & Baku Eye
+    base: Baku
+    items:
+      - "09:00 Transfer back to Baku"
+      - "15:00 Port Baku Mall / 28 Mall"
+      - "19:00 Baku Eye and night view from Highland Park"
+      - "21:00 Dinner at Xaniman"
+  - title: Slow day by the Caspian
+    base: Baku
+    items:
+      - "14:00 Caspian Sea promenade and local cafés"
+      - "20:00 Dinner at SAHiL"
+  - title: Gabala — lakes, waterfalls & cable car
+    base: Gabala
+    stay: Qafqaz Riverside Hotel
+    items:
+      - "08:00 Transfer to Gabala"
+      - "13:00 Nohur Lake & Seven Beauties Waterfall"
+      - "15:30 Tufandag cable car"
+      - "20:00 Dinner at Qəbələ Xanlar by the stream"
+  - title: Old City — Maiden Tower & Shirvanshahs' Palace
+    base: Baku
+    items:
+      - "09:00 Transfer back to Baku"
+      - "16:00 Icherisheher (Old City) — Maiden Tower, Palace of the Shirvanshahs"
+      - "19:30 Dinner at Dərya Fish House"
+  - title: Shopping & hamam
+    base: Baku
+    items:
+      - "Morning — last-minute shopping (tea, sweets, carpets)"
+      - "14:00 Hamam / spa"
+  - title: Fly home
+    items:
+      - "12:00 Check out, transfer to airport"
+      - "16:55 Flight from Baku via Sharjah, home by 03:40"
+places:
+  - { name: Courtyard by Marriott Baku, type: stay, location: Baku }
+  - { name: Shahdag Hotel & Spa, type: stay, location: Shahdag, notes: Ski-in resort with on-site dining and mountain views }
+  - { name: Qafqaz Riverside Hotel, type: stay, location: Gabala }
+  - { name: SAHiL Bar & Restaurant, type: food, location: Baku, notes: "Azerbaijani & seafood with Caspian views" }
+  - { name: Xaniman, type: food, location: Baku, notes: "Traditional Sheki-style setting, great kebabs", favourite: true }
+  - { name: Sumakh, type: food, location: Baku, notes: Modern Azerbaijani }
+  - { name: Dərya Fish House, type: food, location: Baku, notes: Fresh catch by the sea }
+  - { name: Art Club Restaurant, type: food, location: Baku, notes: Inside an 18th-century building in the Old City, tried: false }
+  - { name: Shirvanshah Museum Restaurant, type: food, location: Baku, notes: Museum-like traditional setting, tried: false }
+  - { name: Chinar, type: food, location: Baku, notes: Upscale fusion, tried: false }
+  - { name: Mari Vanna, type: food, location: Baku, notes: "Soviet-era nostalgia, Russian classics", tried: false }
+  - { name: Bibi Restoran, type: food, location: Baku, notes: Big family lunch spot }
+  - { name: Qəbələ Xanlar, type: food, location: Gabala, notes: Stream-side BBQ in the forest, favourite: true }
+  - { name: Nohurqışlaq Restaurant, type: food, location: Gabala, notes: Grilled fish by Nohur Lake, tried: false }
+  - { name: Chalet Steak & Wine House, type: food, location: Gabala, notes: On top of the mountain via cable car, tried: false }
+  - { name: Dost Qapısı, type: food, location: Gabala, notes: Indian food if you need a break, tried: false }
+  - { name: Heydar Aliyev Center, type: activity, location: Baku }
+  - { name: Little Venice boat ride, type: activity, location: Baku, cost: 40, currency: AZN, per: group }
+  - { name: Gobustan rock art museum, type: activity, location: Gobustan, cost: 4, currency: AZN, per: person }
+  - { name: Mud volcanoes (Lada taxi ride), type: experience, location: Gobustan }
+  - { name: Yanar Dag (burning mountain), type: activity, location: Absheron }
+  - { name: Shahdag mountain coaster, type: activity, location: Shahdag, cost: 62, currency: AZN, per: person, favourite: true }
+  - { name: Quad biking in the snow, type: activity, location: Shahdag, cost: 145, currency: AZN, per: group }
+  - { name: Baku Eye, type: activity, location: Baku, cost: 14, currency: AZN, per: person }
+  - { name: Tufandag cable car, type: activity, location: Gabala, cost: 35, currency: AZN, per: person }
+  - { name: Nohur Lake & Seven Beauties Waterfall, type: activity, location: Gabala }
+  - { name: Hamam & massage, type: experience, location: Baku / Gabala, cost: 120, currency: AZN, per: person }
+  - { name: Sheki Khan's Palace, type: activity, location: Sheki, notes: "Ran out of time — next time, with a night in a caravanserai", tried: false }
+  - { name: Khinaliq village, type: experience, location: Caucasus, notes: One of the highest and oldest villages in the world, tried: false }
+tips:
+  - Download the Bolt or Yandex Go taxi apps — far cheaper than street taxis.
+  - Get offline Google Maps and Google Translate (Azerbaijani) before landing.
+  - Carry some USD/EUR cash; card acceptance is good in Baku but patchy in the mountains.
+  - Shahdag is cold even in April — pack a proper jacket and gloves.
+  - The VisitBaku app is handy for events and opening hours.
+checklist: [e-Visa printout, Travel insurance, Universal adapter, Warm jacket, Offline maps]

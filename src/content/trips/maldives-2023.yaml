@@ -1,0 +1,71 @@
+title: Maldives on a budget — Maafushi
+country: Maldives
+flag: 🇲🇻
+region: South Asia — Islands
+destinations: [Malé, Maafushi, Fulidhoo, Ari Atoll]
+startDate: 2023-06-10
+endDate: 2023-06-16
+company: Friends
+travellers: 1
+styles: [Beach, Islands, Snorkelling, Budget]
+localCurrency: MVR
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Maafushi_island.jpg/1280px-Maafushi_island.jpg
+coverCredit: Maafushi — Wikimedia Commons
+summary: >-
+  The Maldives without the resort price. We stayed on Maafushi, a local island, and spent the
+  days on excursions: snorkelling with sharks and turtles, stingrays at Fulidhoo, sandbanks,
+  a resort day visit and a first Discover Scuba dive. All for about ₹78k per person.
+highlights:
+  - Swimming with nurse sharks
+  - Stingrays at Fulidhoo
+  - Sandbank picnics and dolphins
+  - Discover Scuba Diving
+  - Sunset fishing & BBQ
+bestTime: November–April (dry season). June is cheaper but has more rain.
+budget:
+  travellers: 1
+  note: Actual per-person costs.
+  items:
+    - { label: Flight BLR–Colombo–Malé, category: flights, amount: 9000, currency: INR }
+    - { label: Flight Malé–BLR, category: flights, amount: 15000, currency: INR }
+    - { label: "Arena Beach Hotel Maafushi (6 nights, breakfast)", category: stay, amount: 25000, currency: INR }
+    - { label: Speedboat transfers both ways, category: transport, amount: 4000, currency: INR }
+    - { label: Excursions, category: activities, amount: 20000, currency: INR }
+    - { label: Dinners, category: food, amount: 5000, currency: INR }
+days:
+  - title: Night flight via Colombo
+    items: ["21:10 BLR → Colombo", "23:00 Monopoly Deal tournament at the airport"]
+  - title: Arrive Malé · Maafushi
+    base: Maafushi
+    stay: Arena Beach Hotel
+    items: ["07:20 Colombo → Malé", "Speedboat to Maafushi", "14:00 Check in, bikini beach"]
+  - title: Biyadhoo & Turtle Reef · Sandbank
+    base: Maafushi
+    items: ["Snorkelling at Biyadhoo Reef & Turtle Reef", "Oyedhooni sandbank"]
+  - title: Sharks & stingrays
+    base: Maafushi
+    items: ["Swimming with sharks (snorkelling)", "Fulidhoo island — stingrays"]
+  - title: Discover Scuba · Water villa
+    base: Maafushi
+    items: ["Discover Scuba Diving", "Private water villa visit"]
+  - title: Chill day
+    base: Maafushi
+    items: ["Lazy beach day", "Sunset fishing & BBQ"]
+  - title: Fly home
+    items: ["Speedboat to Malé", "15:40 Malé → Bangalore"]
+places:
+  - { name: Arena Beach Hotel, type: stay, location: Maafushi, notes: Local-island hotel with its own excursion desk (Arena Expedition), favourite: true }
+  - { name: "Half-day turtles, sandbank & dolphins", type: activity, location: Maafushi, cost: 35, currency: USD, per: person }
+  - { name: "Shark snorkelling — mantas, sharks, sandbank, dolphins", type: experience, location: Maafushi, cost: 60, currency: USD, per: person, favourite: true }
+  - { name: Sunset fishing, type: experience, location: Maafushi, cost: 30, currency: USD, per: person }
+  - { name: Resort day visit (Olhuveli), type: experience, location: South Malé Atoll, cost: 125, currency: USD, per: person }
+  - { name: "Local island, snorkelling, BBQ, sandbank & dolphins", type: activity, location: Maafushi, cost: 50, currency: USD, per: person }
+  - { name: Whale shark & manta trip — Ari Atoll, type: experience, location: Ari Atoll, cost: 110, currency: USD, per: person, notes: Full day, tried: false }
+  - { name: Fulidhoo stingrays, type: activity, location: Fulidhoo }
+  - { name: Discover Scuba Diving, type: activity, location: Maafushi }
+  - { name: Arena Expedition, type: operator, location: Maafushi, notes: Hotel excursion desk — fair prices and good boats }
+tips:
+  - Local islands are dry — no alcohol, except on the floating bars and at resort visits.
+  - Wear modest clothes away from the designated bikini beach.
+  - Book a resort day pass if you want the resort experience without the resort price.
+  - Excursions are priced in USD. Pay cash for a better rate.

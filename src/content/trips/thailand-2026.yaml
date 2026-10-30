@@ -1,0 +1,84 @@
+title: Thailand — Krabi, Railay & Phi Phi
+country: Thailand
+flag: 🇹🇭
+region: Southeast Asia
+destinations: [Krabi, Ao Nang, Railay, Phi Phi]
+startDate: 2026-02-18
+endDate: 2026-02-25
+company: Friend
+travellers: 2
+styles: [Beach, Islands, Diving, Nightlife]
+localCurrency: THB
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/KohPhiPhi.JPG/1280px-KohPhiPhi.JPG
+coverCredit: Koh Phi Phi — Wikimedia Commons
+summary: >-
+  A week of limestone cliffs and turquoise water. Ao Nang and Railay first, then the Emerald
+  Pool and hot springs inland, three nights on Phi Phi for diving and an island tour, and a
+  last night back in Krabi.
+highlights:
+  - Railay beach and the viewpoint
+  - Emerald Pool & hot springs
+  - Diving off Phi Phi
+  - Phi Phi island-hopping tour
+  - Sunset from Khao Thong Hill café
+bestTime: November–April (west-coast dry season)
+budget:
+  travellers: 2
+  note: Actual totals for two people.
+  items:
+    - { label: Flights BLR ⇄ Krabi (IndiGo), category: flights, amount: 43488, currency: INR }
+    - { label: BLR airport cab, category: transport, amount: 1370, currency: INR }
+    - { label: Ferries Krabi ⇄ Phi Phi, category: transport, amount: 10943, currency: INR }
+    - { label: Krabi cabs, category: transport, amount: 1167, currency: INR }
+    - { label: Krabi Front Bay (3 nights), category: stay, amount: 17753, currency: INR }
+    - { label: Yada Phi Phi (3 nights), category: stay, amount: 28623, currency: INR }
+    - { label: Krabi Airbnb (1 night), category: stay, amount: 2149, currency: INR }
+    - { label: Diving, category: activities, amount: 25000, currency: INR }
+    - { label: "Cash for food, tours & fun", category: food, amount: 19630, currency: INR }
+days:
+  - title: Fly to Krabi
+    base: Ao Nang
+    stay: Krabi Front Bay
+    items: ["16:15 BLR departure", "21:25 Arrive Krabi, private cab", "Check in"]
+  - title: Ao Nang & Railay
+    base: Ao Nang
+    items: ["Ao Nang beach", "Longtail to Railay", "Railay night kayaking (bioluminescence)"]
+  - title: Emerald Pool & hot springs
+    base: Ao Nang
+    items: ["Private taxi to the Emerald Pool and hot springs", "Sunset at Khao Thong Hill café"]
+  - title: Ferry to Phi Phi
+    base: Phi Phi
+    stay: Yada Phi Phi
+    items: ["12:30 Ferry", "13:30 Arrive Phi Phi, check in", "Viewpoint hike at sunset"]
+  - title: Dive day
+    base: Phi Phi
+    items: ["Two dives around Phi Phi"]
+  - title: Island tour
+    base: Phi Phi
+    items: ["Phi Phi Leh, Pileh lagoon, Maya Bay (viewing), Monkey Beach", "Illuzion for a night out"]
+  - title: Back to Krabi
+    base: Krabi
+    stay: Krabi Airbnb
+    items: ["12:30 Ferry to Krabi", "14:00 Check in", "Krabi town night market"]
+  - title: Fly home
+    items: ["08:00 Leave for airport", "11:15 Krabi → BLR"]
+places:
+  - { name: Krabi Front Bay, type: stay, location: Ao Nang }
+  - { name: Yada Phi Phi, type: stay, location: Phi Phi }
+  - { name: Coffee Club, type: food, location: Ao Nang, notes: Smoothies & coffee }
+  - { name: Sea Salt, type: food, location: Ao Nang }
+  - { name: Khao Thong Hill Café, type: food, location: Krabi, notes: Sunset views, favourite: true }
+  - { name: Illuzion, type: experience, location: Phi Phi, notes: Big night club }
+  - { name: Emerald Pool & hot springs (private taxi), type: activity, location: Krabi, link: "https://www.getyourguide.com/krabi-province-l2172/krabi-emerald-pool-and-hot-springs-waterfall-half-day-trip-t529737/" }
+  - { name: 7 Islands sunset tour with plankton swim & BBQ, type: experience, location: Krabi, link: "https://www.getyourguide.com/ao-nang-l89867/krabi-7-islands-sunset-tour-with-plankton-swim-and-bbq-t818065/", favourite: true }
+  - { name: Hong Islands by speedboat, type: activity, location: Krabi, link: "https://www.getyourguide.com/krabi-l2174/krabi-hong-islands-day-trip-by-speedboat-with-lunch-t144153/", tried: false }
+  - { name: Railay clear-kayak night tour (bioluminescence), type: experience, location: Railay, link: "https://www.getyourguide.com/krabi-l2174/railay-illuminated-clear-kayak-night-tour-bioluminescence-t919727/" }
+  - { name: ATV adventure, type: activity, location: Krabi, link: "https://www.getyourguide.com/krabi-l2174/krabi-1-hour-atv-adventure-through-beautiful-nature-t714630/", tried: false }
+  - { name: Phi Phi dives, type: activity, location: Phi Phi, cost: 12500, currency: INR, per: person }
+tips:
+  - Fill in the TDAC (Thailand Digital Arrival Card) online before you fly.
+  - Grab and Bolt work in Krabi. On Phi Phi you walk everywhere.
+  - Download offline maps for Krabi and Phi Phi.
+  - Pack medicines and printouts, and save travel docs offline in Drive.
+  - A forex card with zero markup (e.g. Scapia) saves a lot.
+checklist: [TDAC form, Travel insurance, Grab & Bolt apps, Offline maps, Forex card, SIM/eSIM]

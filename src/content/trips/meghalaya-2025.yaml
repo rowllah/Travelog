@@ -1,0 +1,69 @@
+title: Meghalaya — Waterfalls, caves & living root bridges
+country: India
+flag: 🇮🇳
+region: India — Northeast
+destinations: [Guwahati, Sohra (Cherrapunji), Laitkynsew, Mawphlang, Umiam, Shillong]
+startDate: 2025-09-21
+endDate: 2025-09-26
+company: Family
+travellers: 5
+styles: [Nature, Mountains, Family, Road trip]
+localCurrency: INR
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Living_root_bridges%2C_Nongriat_village%2C_Meghalaya2.jpg/1280px-Living_root_bridges%2C_Nongriat_village%2C_Meghalaya2.jpg
+coverCredit: Living root bridge, Nongriat — Wikimedia Commons
+summary: >-
+  Six easy days in the abode of clouds, booked as one package with ChaloHoppo. Three nights at
+  a waterfall-deck suite in Sohra, then two at a lake-view resort on Umiam. Expect caves,
+  living root bridges, sacred groves and the Laitlum canyons.
+highlights:
+  - Seven Sisters and Nohkalikai falls
+  - Umkar and Ummnonoi living root bridges
+  - Mawphlang Sacred Grove with a Khasi guide
+  - Laitlum Canyons
+  - Zip-lining at Mawkdok
+bestTime: October–April is clearest. September is lush, but expect daily rain.
+budget:
+  travellers: 5
+  note: Group total for 5 in 2 rooms with an extra bed. Flights included cancellable fares.
+  items:
+    - { label: Flights BLR ⇄ Guwahati (5 pax), category: flights, amount: 100000, currency: INR }
+    - { label: "ChaloHoppo package — stays, Innova Crysta, guides, entries", category: package, amount: 307000, currency: INR }
+    - { label: Lunches & dinners, category: food, amount: 40000, currency: INR }
+days:
+  - title: Fly to Guwahati · Drive to Sohra
+    base: Sohra
+    stay: Polo Orchid Resort (Waterfall Deck Suite)
+    items: ["08:45 BLR → GAU", "11:50 Arrive Guwahati", "Lunch at Nongpoh", "Mawkdok viewpoint (zip-line if the weather allows)", "Laitmawsiang — Garden of Caves", "17:00 Check in"]
+  - title: Sohra falls & caves
+    base: Sohra
+    items: ["09:00 Seven Sisters Falls", "Arwah / Mawsmai caves", "Lyngksiar / Prut Falls viewpoint (20-min walk)", "Nohkalikai Falls", "Sohra market for a local meal"]
+  - title: Living root bridges
+    base: Sohra
+    items: ["09:00 Drive to Laitkynsew", "Umkar living root bridge", "Ummnonoi living root bridge (~3-hr hike round trip)"]
+  - title: Sacred grove → Umiam
+    base: Umiam
+    stay: Ri Kynjai Resort (Superior Lake View)
+    items: ["09:30 Mawphlang Sacred Grove & Khasi monolith park", "Picnic lunch", "14:00 Drive to Umiam", "16:00 Check in by the lake"]
+  - title: Laitlum & Shillong
+    base: Umiam
+    items: ["Laitlum Canyons", "Don Bosco Museum", "Ward's Lake", "Elephant Falls"]
+  - title: Fly home
+    items: ["Check out, shopping", "16:35 GAU → BLR"]
+places:
+  - { name: Polo Orchid Resort, type: stay, location: Sohra, notes: Waterfall Deck Suite — wake up to the falls, favourite: true }
+  - { name: Ri Kynjai Resort, type: stay, location: Umiam, notes: "Superior Lake View rooms, gorgeous at sunrise", favourite: true }
+  - { name: Seven Sisters Falls, type: activity, location: Sohra }
+  - { name: Arwah & Mawsmai caves, type: activity, location: Sohra }
+  - { name: Umkar living root bridge, type: experience, location: Laitkynsew, favourite: true }
+  - { name: Ummnonoi living root bridge hike, type: activity, location: Laitkynsew, notes: About 3 hours round trip }
+  - { name: Double-decker root bridge (Nongriat), type: experience, location: Nongriat, notes: "About 3,500 steps — keep a separate morning for it", tried: false }
+  - { name: Mawphlang Sacred Grove, type: experience, location: Mawphlang, notes: Take the Khasi guide walk }
+  - { name: Laitlum Canyons, type: activity, location: Shillong }
+  - { name: Mawkdok zip-line, type: activity, location: Mawkdok }
+  - { name: Garden of Caves (Laitmawsiang), type: activity, location: Sohra }
+  - { name: Sohra market local meal, type: food, location: Sohra, notes: Try jadoh and dohneiiong }
+  - { name: ChaloHoppo, type: operator, notes: "Planned stays, a car with driver, guides and entries as one package — very smooth", favourite: true }
+tips:
+  - Roads are slow, so plan no more than 2–3 sights a day.
+  - Carry rain gear and shoes with grip for the root-bridge steps.
+  - Sohra is the base for the falls and bridges; Shillong and Umiam work better for the last nights.

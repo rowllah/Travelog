@@ -1,0 +1,316 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { sortTrips, perPersonBudget, tripDays, FIXED_CATEGORIES, BUDGET_LABELS } from '../lib/site';
+
+const trips = sortTrips(await getCollection('trips'));
+const data = trips.map((t) => ({
+  id: t.id,
+  title: t.data.title,
+  flag: t.data.flag,
+  country: t.data.country,
+  local: t.data.localCurrency,
+  length: t.data.days.length || tripDays(t),
+  days: t.data.days.map((d) => ({ title: d.title, base: d.base ?? '', stay: d.stay ?? '', items: d.items })),
+  budget: perPersonBudget(t).map((i) => ({ label: i.label, category: i.category, amount: i.amount, currency: i.currency, estimate: i.estimate })),
+  extras: t.data.places
+    .filter((p) => p.cost !== undefined)
+    .map((p) => ({ name: p.name, type: p.type, cost: p.cost!, currency: p.currency ?? t.data.localCurrency, per: p.per ?? '' })),
+}));
+const meta = { fixed: FIXED_CATEGORIES, labels: BUDGET_LABELS };
+---
+
+<Base title="Plan a trip" description="Start from one of my real itineraries and get an approximate budget for your group, converted at live rates.">
+  <section class="hero" style="padding-bottom:1.5rem">
+    <div class="wrap">
+      <p class="eyebrow">Itinerary builder</p>
+      <h1>Plan your trip from mine</h1>
+      <p class="lead">
+        Pick a trip, then keep, reorder or add days, set your group size and travel style. The budget updates live in your chosen
+        currency. Save the plan, share the link or print it.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="card no-print" style="margin-bottom:1.5rem">
+      <div class="grid-2">
+        <label class="field">
+          Start from
+          <select id="p-trip">
+            {data.map((t) => <option value={t.id}>{t.flag} {t.title}</option>)}
+          </select>
+        </label>
+        <label class="field">
+          Travellers
+          <input id="p-travellers" type="number" min="1" max="30" value="2" />
+        </label>
+        <label class="field">
+          Your start date (optional)
+          <input id="p-start" type="date" />
+        </label>
+        <div class="field">
+          Travel style
+          <div class="seg" id="p-style">
+            <button type="button" data-v="0.7">Budget</button>
+            <button type="button" data-v="1" aria-pressed="true">As I did it</button>
+            <button type="button" data-v="1.5">Comfort</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="section-head">
+          <h2 id="p-title">Your itinerary</h2>
+          <div class="no-print" style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-small" id="p-add">+ Add a day</button>
+            <button class="btn btn-ghost btn-small" id="p-reset">Reset</button>
+          </div>
+        </div>
+        <p class="muted no-print" style="font-size:.9rem">Untick a day to drop it. Use the arrows to reorder. Click a day title to rename it.</p>
+        <div class="stack" id="p-days" style="gap:.7rem"></div>
+
+        <h3 style="margin-top:2rem">My notes</h3>
+        <textarea id="p-notes" class="input" style="width:100%;min-height:6rem" placeholder="Flights to check, people to call, ideas…"></textarea>
+      </div>
+
+      <aside class="stack sticky">
+        <div class="card">
+          <p class="eyebrow">Estimated budget</p>
+          <div class="total-big" id="p-total">—</div>
+          <p class="muted" style="margin:0" id="p-pp"></p>
+          <table class="budget" style="margin-top:1rem">
+            <tbody id="p-breakdown"></tbody>
+          </table>
+          <p class="muted" style="font-size:.78rem;margin-top:.8rem">
+            Flights, visa and insurance stay fixed per person. Everything else scales with the number of days and your travel style. Based on
+            my real costs where I recorded them. <span data-fx-status></span>
+          </p>
+        </div>
+
+        <div class="card no-print" id="p-extras-card">
+          <h3>Add paid extras</h3>
+          <p class="muted" style="font-size:.85rem">Optional activities with prices from my notes.</p>
+          <div id="p-extras"></div>
+        </div>
+
+        <div class="card no-print">
+          <div class="stack" style="gap:.5rem">
+            <button class="btn" id="p-save">💾 Save on this device</button>
+            <button class="btn btn-ghost" id="p-share">🔗 Copy share link</button>
+            <button class="btn btn-ghost" id="p-copy">📋 Copy as text</button>
+            <button class="btn btn-ghost" onclick="window.print()">🖨️ Print / save as PDF</button>
+          </div>
+          <p class="muted" id="p-msg" style="font-size:.85rem;margin:.6rem 0 0"></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script id="plan-data" type="application/json" set:html={JSON.stringify({ trips: data, meta })} />
+</Base>
+
+<script>
+  import { convert, formatMoney, getCurrency, rates } from '../scripts/currency';
+
+  type Day = { title: string; base: string; stay: string; items: string[]; on: boolean };
+  type PlanState = { trip: string; travellers: number; style: number; start: string; days: Day[]; extras: number[]; notes: string };
+
+  const { trips, meta } = JSON.parse(document.getElementById('plan-data')!.textContent!);
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const KEY = 'travelog:plan';
+
+  const tripSel = $<HTMLSelectElement>('p-trip');
+  const travellersEl = $<HTMLInputElement>('p-travellers');
+  const startEl = $<HTMLInputElement>('p-start');
+  const notesEl = $<HTMLTextAreaElement>('p-notes');
+  const styleBtns = [...document.querySelectorAll<HTMLButtonElement>('#p-style button')];
+
+  const fresh = (id: string, travellers = 2): PlanState => {
+    const t = trips.find((x: any) => x.id === id) ?? trips[0];
+    return { trip: t.id, travellers, style: 1, start: '', days: t.days.map((d: any) => ({ ...d, on: true })), extras: [], notes: '' };
+  };
+
+  function load(): PlanState {
+    const params = new URLSearchParams(location.search);
+    const hash = location.hash.match(/#p=(.+)/);
+    if (hash) {
+      try { return JSON.parse(decodeURIComponent(escape(atob(hash[1])))); } catch { /* ignore */ }
+    }
+    const saved = localStorage.getItem(KEY);
+    const wanted = params.get('trip');
+    if (saved) {
+      const s = JSON.parse(saved) as PlanState;
+      if (!wanted || wanted === s.trip) return s;
+    }
+    return fresh(wanted ?? trips[0].id);
+  }
+
+  let state = load();
+  const trip = () => trips.find((x: any) => x.id === state.trip) ?? trips[0];
+
+  function dateFor(i: number) {
+    if (!state.start) return '';
+    const d = new Date(state.start);
+    d.setDate(d.getDate() + i);
+    return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  }
+
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  function renderDays() {
+    const box = $('p-days');
+    let n = 0;
+    box.innerHTML = state.days
+      .map((d, i) => {
+        const label = d.on ? `Day ${++n}${state.start ? ' · ' + dateFor(n - 1) : ''}` : 'Skipped';
+        return `<div class="plan-day ${d.on ? '' : 'off'}" data-i="${i}">
+          <input type="checkbox" ${d.on ? 'checked' : ''} data-act="toggle" aria-label="Include day" style="margin-top:.3rem" />
+          <div>
+            <div class="eyebrow" style="margin:0">${label}${d.base ? ' · 📍 ' + esc(d.base) : ''}</div>
+            <strong contenteditable="true" data-act="title" spellcheck="false">${esc(d.title)}</strong>
+            ${d.stay ? `<div class="muted" style="font-size:.8rem">🛏️ ${esc(d.stay)}</div>` : ''}
+            <ul class="plan-day-items">${d.items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+          </div>
+          <div class="controls no-print">
+            <button class="icon-btn" data-act="up" title="Move up">↑</button>
+            <button class="icon-btn" data-act="down" title="Move down">↓</button>
+            <button class="icon-btn" data-act="del" title="Remove">✕</button>
+          </div>
+        </div>`;
+      })
+      .join('');
+  }
+
+  function renderExtras() {
+    const t = trip();
+    $('p-extras-card').hidden = !t.extras.length;
+    $('p-extras').innerHTML = t.extras
+      .map(
+        (x: any, i: number) => `<div class="extra">
+          <input type="checkbox" id="ex-${i}" data-ex="${i}" ${state.extras.includes(i) ? 'checked' : ''} />
+          <label for="ex-${i}">${esc(x.name)}<br /><span class="muted">${formatMoney(convert(x.cost, x.currency, getCurrency(), rates().rates), getCurrency())}${x.per ? ' / ' + esc(x.per) : ''}</span></label>
+        </div>`,
+      )
+      .join('');
+  }
+
+  function compute() {
+    const t = trip();
+    const to = getCurrency();
+    const r = rates().rates;
+    const activeDays = state.days.filter((d) => d.on).length;
+    const scale = t.length ? activeDays / t.length : 1;
+    const people = Math.max(1, state.travellers);
+    const cats = new Map<string, number>();
+    for (const b of t.budget) {
+      const base = convert(b.amount, b.currency, to, r);
+      const v = meta.fixed.includes(b.category) ? base : base * scale * state.style;
+      cats.set(b.category, (cats.get(b.category) ?? 0) + v * people);
+    }
+    let extras = 0;
+    for (const i of state.extras) {
+      const x = t.extras[i];
+      if (!x) continue;
+      const per = x.per.toLowerCase();
+      let mult = per.includes('person') || per.includes('dive') ? people : 1;
+      if (per.includes('night')) mult = Math.max(activeDays - 1, 1) * Math.ceil(people / 2);
+      extras += convert(x.cost, x.currency, to, r) * mult;
+    }
+    if (extras) cats.set('extras', extras);
+    const total = [...cats.values()].reduce((a, b) => a + b, 0);
+    return { cats, total, people, activeDays, to };
+  }
+
+  function renderBudget() {
+    const { cats, total, people, activeDays, to } = compute();
+    if (!trip().budget.length && !cats.size) {
+      $('p-total').textContent = 'No budget data';
+      $('p-pp').textContent = 'I did not record costs for this trip.';
+      $('p-breakdown').innerHTML = '';
+      return;
+    }
+    $('p-total').textContent = formatMoney(total, to);
+    $('p-pp').textContent = `${formatMoney(total / people, to)} per person · ${people} traveller${people > 1 ? 's' : ''} · ${activeDays} days`;
+    $('p-breakdown').innerHTML = [...cats]
+      .map(([c, v]) => `<tr><td>${c === 'extras' ? 'Selected extras' : meta.labels[c] ?? c}</td><td>${formatMoney(v, to)}</td></tr>`)
+      .join('');
+  }
+
+  function render() {
+    tripSel.value = state.trip;
+    travellersEl.value = String(state.travellers);
+    startEl.value = state.start;
+    notesEl.value = state.notes;
+    styleBtns.forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.v) === state.style)));
+    $('p-title').textContent = `${trip().flag} ${trip().title}`;
+    renderDays();
+    renderExtras();
+    renderBudget();
+  }
+
+  function toText() {
+    const { total, people, to } = compute();
+    let n = 0;
+    const lines = [`${trip().title} — my plan`, `${people} traveller(s) · est. ${formatMoney(total, to)} total`, ''];
+    for (const d of state.days.filter((x) => x.on)) {
+      lines.push(`Day ${++n}${state.start ? ' (' + dateFor(n - 1) + ')' : ''}: ${d.title}${d.stay ? ' — stay: ' + d.stay : ''}`);
+      d.items.forEach((i) => lines.push(`  • ${i}`));
+    }
+    if (state.notes) lines.push('', 'Notes:', state.notes);
+    lines.push('', `Based on ${location.origin}${location.pathname.replace(/plan\/?$/, '')}trips/${state.trip}`);
+    return lines.join('\n');
+  }
+
+  const msg = (s: string) => { $('p-msg').textContent = s; setTimeout(() => ($('p-msg').textContent = ''), 3000); };
+
+  $('p-days').addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+    const row = el.closest<HTMLElement>('.plan-day');
+    if (!row) return;
+    const i = Number(row.dataset.i);
+    const act = el.dataset.act;
+    if (act === 'toggle') state.days[i].on = (el as HTMLInputElement).checked;
+    else if (act === 'up' && i > 0) [state.days[i - 1], state.days[i]] = [state.days[i], state.days[i - 1]];
+    else if (act === 'down' && i < state.days.length - 1) [state.days[i + 1], state.days[i]] = [state.days[i], state.days[i + 1]];
+    else if (act === 'del') state.days.splice(i, 1);
+    else return;
+    renderDays();
+    renderBudget();
+  });
+  $('p-days').addEventListener('input', (e) => {
+    const el = e.target as HTMLElement;
+    if (el.dataset.act !== 'title') return;
+    const i = Number(el.closest<HTMLElement>('.plan-day')!.dataset.i);
+    state.days[i].title = el.textContent ?? '';
+  });
+  $('p-extras').addEventListener('change', (e) => {
+    const i = Number((e.target as HTMLElement).dataset.ex);
+    state.extras = (e.target as HTMLInputElement).checked ? [...state.extras, i] : state.extras.filter((x) => x !== i);
+    renderBudget();
+  });
+  tripSel.addEventListener('change', () => { state = fresh(tripSel.value, state.travellers); history.replaceState(null, '', `?trip=${state.trip}`); render(); });
+  travellersEl.addEventListener('input', () => { state.travellers = Math.max(1, Number(travellersEl.value) || 1); renderBudget(); });
+  startEl.addEventListener('input', () => { state.start = startEl.value; renderDays(); });
+  notesEl.addEventListener('input', () => (state.notes = notesEl.value));
+  styleBtns.forEach((b) => b.addEventListener('click', () => { state.style = Number(b.dataset.v); render(); }));
+  $('p-add').addEventListener('click', () => {
+    state.days.push({ title: 'Free day — click to rename', base: '', stay: '', items: [], on: true });
+    renderDays();
+    renderBudget();
+  });
+  $('p-reset').addEventListener('click', () => { state = fresh(state.trip, state.travellers); render(); });
+  $('p-save').addEventListener('click', () => { localStorage.setItem(KEY, JSON.stringify(state)); msg('Saved. It will be here next time you open this page.'); });
+  $('p-share').addEventListener('click', async () => {
+    const link = `${location.origin}${location.pathname}#p=${btoa(unescape(encodeURIComponent(JSON.stringify(state))))}`;
+    await navigator.clipboard.writeText(link);
+    msg('Share link copied!');
+  });
+  $('p-copy').addEventListener('click', async () => { await navigator.clipboard.writeText(toText()); msg('Itinerary copied as text.'); });
+  window.addEventListener('currencychange', () => { renderExtras(); renderBudget(); });
+  window.addEventListener('rateschange', () => { renderExtras(); renderBudget(); });
+
+  render();
+</script>

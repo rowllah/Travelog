@@ -1,0 +1,42 @@
+---
+import Money from './Money.astro';
+import { url, tripDays, tripMonth, perPersonBudget, isUpcoming, type Trip } from '../lib/site';
+
+interface Props {
+  trip: Trip;
+}
+const { trip } = Astro.props;
+const d = trip.data;
+const days = tripDays(trip);
+const pp = perPersonBudget(trip).map((i) => [i.amount, i.currency] as [number, string]);
+const year = d.startDate ? d.startDate.getUTCFullYear() : '';
+---
+
+<a
+  class="trip-card"
+  href={url(`/trips/${trip.id}`)}
+  data-region={d.region}
+  data-styles={d.styles.join('|')}
+  data-company={d.company ?? ''}
+  data-year={year}
+  data-days={days}
+  data-search={[d.title, d.country, d.summary, ...d.destinations, ...d.styles].join(' ').toLowerCase()}
+>
+  <div class="trip-card-media" style={d.cover ? `background-image:url('${d.cover}')` : undefined}>
+    <span class="trip-flag">{d.flag}</span>
+    {isUpcoming(trip) && <span class="badge badge-upcoming">Upcoming</span>}
+  </div>
+  <div class="trip-card-body">
+    <p class="eyebrow">{tripMonth(trip)} · {days ? `${days} days` : 'Flexible'}</p>
+    <h3>{d.title}</h3>
+    <p class="muted clamp-2">{d.summary}</p>
+    <div class="chips">
+      {d.styles.slice(0, 4).map((s) => <span class="chip">{s}</span>)}
+    </div>
+    {pp.length > 0 && (
+      <p class="trip-card-budget">
+        ≈ <Money sum={pp} /> <span class="muted">per person</span>
+      </p>
+    )}
+  </div>
+</a>

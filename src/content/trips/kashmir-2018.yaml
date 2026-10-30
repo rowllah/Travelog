@@ -1,0 +1,78 @@
+title: Kashmir — Pahalgam, Gulmarg, Sonamarg & Srinagar
+country: India
+flag: 🇮🇳
+region: India — Himalayas
+destinations: [Srinagar, Pahalgam, Gulmarg, Sonamarg]
+startDate: 2018-05-16
+endDate: 2018-05-24
+company: Family
+travellers: 5
+styles: [Mountains, Nature, Family, Road trip]
+localCurrency: INR
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sonmarg_rishav7336.jpg/1280px-Sonmarg_rishav7336.jpg
+coverCredit: Sonamarg — Wikimedia Commons
+summary: >-
+  A classic 8-night family loop through the Kashmir valley: two nights each in Pahalgam,
+  Gulmarg and Sonamarg, ending on a houseboat in Srinagar. We had a private Innova and a
+  family-run local operator, while friends did the Aru–Lidderwat trek in parallel.
+highlights:
+  - Lidder valley walks around Pahalgam
+  - Gulmarg gondola up to the snow
+  - Day trip to Thajiwas Glacier from Sonamarg
+  - Shikara ride and a night on a Dal Lake houseboat
+  - Mughal gardens in Srinagar
+bestTime: April–June for green meadows; December–February for snow at Gulmarg
+budget:
+  travellers: 5
+  note: Land package for 5 (4 adults + 1 child) with hotels, a private Innova and a local guide. Flights weren't recorded and are estimated.
+  items:
+    - { label: "Land package — hotels, Innova, guide", category: package, amount: 170000, currency: INR }
+    - { label: Return flights BLR–Srinagar (5 pax), category: flights, amount: 60000, currency: INR, estimate: true }
+    - { label: "Gondola, ponies, extras", category: activities, amount: 15000, currency: INR, estimate: true }
+days:
+  - title: Fly to Srinagar · Drive to Pahalgam
+    base: Pahalgam
+    stay: Hotel Mount View
+    items: ["Airport pickup", "Drive to Pahalgam and check in"]
+  - title: Pahalgam sightseeing
+    base: Pahalgam
+    items: ["Betaab Valley, Aru Valley and Chandanwari with a local guide", "Lidder river walk"]
+  - title: Pahalgam → Gulmarg
+    base: Gulmarg
+    stay: Pine Palace
+    items: ["Scenic drive across the valley", "Evening in the Gulmarg meadows"]
+  - title: Gulmarg gondola
+    base: Gulmarg
+    items: ["Gondola phases 1 & 2 to Apharwat", "Snow play"]
+  - title: Gulmarg → Sonamarg
+    base: Sonamarg
+    stay: Sultan Resort
+    items: ["Drive to Sonamarg along the Sindh river"]
+  - title: Thajiwas Glacier
+    base: Sonamarg
+    items: ["Day trip to Thajiwas Glacier with a local guide (ponies optional)"]
+  - title: Srinagar · Houseboat & shikara
+    base: Srinagar
+    stay: Dal Lake houseboat
+    items: ["Drive to Srinagar", "Meet the trekking group", "Shikara ride on Dal Lake", "Night on a houseboat"]
+  - title: Srinagar — Mughal gardens
+    base: Srinagar
+    items: ["Nishat Bagh, Shalimar Bagh, Chashme Shahi", "Old city & local markets"]
+  - title: Fly home
+    items: ["Airport drop, fly back to Bangalore"]
+places:
+  - { name: Hotel Mount View, type: stay, location: Pahalgam }
+  - { name: Pine Palace, type: stay, location: Gulmarg }
+  - { name: Sultan Resort, type: stay, location: Sonamarg }
+  - { name: Dal Lake houseboat, type: stay, location: Srinagar, favourite: true }
+  - { name: Gulmarg gondola, type: activity, location: Gulmarg, favourite: true }
+  - { name: Thajiwas Glacier, type: activity, location: Sonamarg }
+  - { name: Shikara ride on Dal Lake, type: experience, location: Srinagar }
+  - { name: Mughal gardens, type: activity, location: Srinagar }
+  - { name: Aru → Lidderwat → Satlanjan → Basmai lake trek, type: experience, location: Pahalgam, notes: "The parallel 7-night trek our friends did (up to 4,000 m), with a family-friendly local guide", tried: false }
+  - { name: Trek Kashmir (Riyaz Pakhtoon), type: operator, location: Srinagar, notes: Family-run local operator who did both our tour and the trek — very caring with kids, link: "http://trekkashmir.com/index.htm", favourite: true }
+tips:
+  - A private vehicle with a local operator lets you change plans around the weather.
+  - Two nights per town is the right pace with family.
+  - For treks like Tarsar–Marsar or Aru–Lidderwat, go late May to September.
+  - Carry layers. Gulmarg can be snowy in May while Srinagar is warm.

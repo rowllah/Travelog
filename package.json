@@ -1,0 +1,16 @@
+{
+  "name": "travelog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rowllah's travel log — past itineraries, budgets and recommendations",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.18.2"
+  }
+}

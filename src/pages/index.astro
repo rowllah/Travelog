@@ -1,0 +1,170 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TripCard from '../components/TripCard.astro';
+import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate } from '../lib/site';
+
+const trips = sortTrips(await getCollection('trips'));
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+
+const countries = new Set(trips.flatMap((t) => t.data.country.split(/\s*&\s*/)));
+const totalDays = trips.reduce((s, t) => s + tripDays(t), 0);
+const places = trips.reduce((s, t) => s + t.data.places.length, 0);
+const regions = [...new Set(trips.map((t) => t.data.region))].sort();
+const styles = [...new Set(trips.flatMap((t) => t.data.styles))].sort();
+const companies = [...new Set(trips.map((t) => (t.data.company ?? '').split(/[ +(]/)[0]).filter(Boolean))].sort();
+const upcoming = trips.filter(isUpcoming);
+const past = trips.filter((t) => !isUpcoming(t));
+---
+
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">A travel log & itinerary library</p>
+      <h1>Where I've been,<br />and how you can go too.</h1>
+      <p class="lead">
+        {SITE.tagline} Pick any trip, then <a href={url('/plan')}>turn it into your own itinerary</a> with a live budget in your
+        currency.
+      </p>
+      <div class="stats">
+        <div class="stat"><strong>{trips.length}</strong><span>trips</span></div>
+        <div class="stat"><strong>{countries.size}</strong><span>countries & territories</span></div>
+        <div class="stat"><strong>{totalDays}</strong><span>days on the road</span></div>
+        <div class="stat"><strong>{places}</strong><span>hotels, eats & experiences</span></div>
+      </div>
+    </div>
+  </section>
+
+  {
+    upcoming.length > 0 && (
+      <section class="wrap" style="padding-bottom:1rem">
+        <div class="section-head">
+          <h2>Coming up next</h2>
+        </div>
+        <div class="trip-grid">
+          {upcoming.map((t) => (
+            <TripCard trip={t} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section wrap" id="trips">
+    <div class="section-head">
+      <div>
+        <h2>All trips</h2>
+        <p class="muted">Filter by what you're in the mood for.</p>
+      </div>
+      <a class="btn btn-ghost btn-small" href={url('/explore')}>Browse every hotel, restaurant & activity →</a>
+    </div>
+
+    <div class="filters" id="trip-filters">
+      <div class="filters-row">
+        <input class="input" type="search" id="f-search" placeholder="Search — e.g. diving, Baku, waterfalls…" />
+        <select class="input" id="f-region">
+          <option value="">All regions</option>
+          {regions.map((r) => <option value={r}>{r}</option>)}
+        </select>
+        <select class="input" id="f-company">
+          <option value="">Any company</option>
+          {companies.map((c) => <option value={c}>{c}</option>)}
+        </select>
+        <select class="input" id="f-length">
+          <option value="">Any length</option>
+          <option value="0-6">Up to 6 days</option>
+          <option value="7-10">7–10 days</option>
+          <option value="11-99">11+ days</option>
+        </select>
+      </div>
+      <div class="filters-row chips" id="f-styles">
+        {styles.map((s) => <button class="chip" type="button" aria-pressed="false" data-style={s}>{s}</button>)}
+      </div>
+      <span class="result-count" id="f-count"></span>
+    </div>
+
+    <div class="trip-grid" id="trip-grid">
+      {past.map((t) => <TripCard trip={t} />)}
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="two-col">
+      <div>
+        <h2>Timeline</h2>
+        <p class="muted">Every trip, newest first.</p>
+        <div class="timeline">
+          {
+            trips.map((t) => (
+              <a href={url(`/trips/${t.id}`)}>
+                <span class="year">{t.data.startDate?.getUTCFullYear() ?? '—'}</span>
+                <span>
+                  {t.data.flag} <strong>{t.data.title}</strong> <span class="muted">· {tripMonth(t)}</span>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <aside class="card">
+        <h3>From the journal</h3>
+        {
+          posts.length ? (
+            posts.map((p) => (
+              <p>
+                <a href={url(`/blog/${p.id}`)}>
+                  <strong>{p.data.title}</strong>
+                </a>
+                <br />
+                <span class="muted">{formatDate(p.data.date)}</span>
+              </p>
+            ))
+          ) : (
+            <p class="muted">No posts yet.</p>
+          )
+        }
+        <a class="btn btn-small" href={url('/add#blog')}>Write a post</a>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const grid = document.getElementById('trip-grid')!;
+  const cards = [...grid.querySelectorAll<HTMLElement>('.trip-card')];
+  const search = document.getElementById('f-search') as HTMLInputElement;
+  const region = document.getElementById('f-region') as HTMLSelectElement;
+  const company = document.getElementById('f-company') as HTMLSelectElement;
+  const length = document.getElementById('f-length') as HTMLSelectElement;
+  const styleBtns = [...document.querySelectorAll<HTMLButtonElement>('#f-styles button')];
+  const count = document.getElementById('f-count')!;
+
+  function apply() {
+    const q = search.value.trim().toLowerCase();
+    const active = styleBtns.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.style!);
+    const [min, max] = length.value ? length.value.split('-').map(Number) : [0, 999];
+    let shown = 0;
+    for (const c of cards) {
+      const styles = c.dataset.styles!.split('|');
+      const days = Number(c.dataset.days);
+      const ok =
+        (!q || c.dataset.search!.includes(q)) &&
+        (!region.value || c.dataset.region === region.value) &&
+        (!company.value || c.dataset.company!.startsWith(company.value)) &&
+        days >= min && days <= max &&
+        active.every((s) => styles.includes(s));
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    count.textContent = `${shown} of ${cards.length} trips`;
+  }
+
+  styleBtns.forEach((b) =>
+    b.addEventListener('click', () => {
+      b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
+      apply();
+    }),
+  );
+  [search, region, company, length].forEach((el) => el.addEventListener('input', apply));
+  apply();
+</script>
