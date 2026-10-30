@@ -1,1 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0a7ea4"/><text x="32" y="44" font-size="34" text-anchor="middle" fill="#fdf6ec" font-family="Georgia,serif"></text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#062a43"/>
+      <stop offset="1" stop-color="#0a7ea4"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6c766"/>
+      <stop offset="1" stop-color="#e0a43a"/>
+    </linearGradient>
+    <clipPath id="tile"><rect width="64" height="64" rx="15"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="64" height="64" fill="url(#sky)"/>
+    <circle cx="32" cy="34" r="15" fill="url(#sun)"/>
+    <path d="M0 38 C8 33 16 33 24 38 S40 43 48 38 S60 33 64 36 V64 H0 Z" fill="#4cc9e0"/>
+    <path d="M0 47 C8 42 16 42 24 47 S40 52 48 47 S60 42 64 45 V64 H0 Z" fill="#0a7ea4"/>
+    <path d="M0 56 C8 51 16 51 24 56 S40 61 48 56 S60 51 64 54 V64 H0 Z" fill="#062a43"/>
+    <path d="M17 17 l3.5 -2.5 l3.5 2.5 M26 12 l2.5 -1.8 l2.5 1.8" fill="none" stroke="#f7f3ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

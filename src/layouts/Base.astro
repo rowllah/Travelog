@@ -33,6 +33,9 @@ const active = (href: string) => (href === '/' ? path === '/' || path.startsWith
     <meta property="og:description" content={description} />
     {image && <meta property="og:image" content={image} />}
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={url('/icon-512.png')} type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
+    <meta name="theme-color" content="#062a43" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -45,7 +48,7 @@ const active = (href: string) => (href === '/' ? path === '/' || path.startsWith
     <header class="site-header">
       <div class="wrap header-inner">
         <a class="brand" href={url('/')}>
-          <span class="brand-mark">✈︎</span>
+          <img class="brand-mark" src={url('/favicon.svg')} alt="" width="34" height="34" />
           <span>{SITE.owner}'s <em>{SITE.title}</em></span>
         </a>
         <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
