@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import TripCard from '../components/TripCard.astro';
-import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate, shortName, shortYear, tripYearLabel, hasDetails } from '../lib/site';
+import { SITE, url, sortTrips, tripDays, isUpcoming, formatDate, shortName, shortYear, tripYearLabel, hasDetails, tripVisits } from '../lib/site';
 
 const allTrips = sortTrips(await getCollection('trips'));
 const trips = allTrips.filter(hasDetails);
@@ -15,6 +15,9 @@ const styles = [...new Set(trips.flatMap((t) => t.data.styles))].sort();
 const companies = [...new Set(trips.map((t) => (t.data.company ?? '').split(/[ +(]/)[0]).filter(Boolean))].sort();
 const upcoming = trips.filter(isUpcoming);
 const past = trips.filter((t) => !isUpcoming(t));
+const timeline = allTrips
+  .flatMap((t) => tripVisits(t).map((date) => ({ t, date })))
+  .sort((a, b) => +b.date - +a.date);
 const diveTrips = trips.filter((t) => t.data.styles.some((s) => ['Diving', 'Snorkelling'].includes(s)));
 ---
 
@@ -140,23 +143,15 @@ const diveTrips = trips.filter((t) => t.data.styles.some((s) => ['Diving', 'Snor
         <p class="muted">Every trip, newest first.</p>
         <div class="timeline">
           {
-            allTrips.map((t) =>
-              hasDetails(t) ? (
-                <a href={url(`/trips/${t.id}`)}>
-                  <span class="year">{tripYearLabel(t, '—')}</span>
-                  <span>
-                    {t.data.flag} <strong>{t.data.title}</strong> <span class="muted">· {tripMonth(t)}</span>
-                  </span>
-                </a>
-              ) : (
-                <div class="timeline-stub">
-                  <span class="year">{tripYearLabel(t, '—')}</span>
-                  <span>
-                    {t.data.flag} <strong>{t.data.title}</strong> <span class="muted">· details coming soon</span>
-                  </span>
-                </div>
-              ),
-            )
+            timeline.map(({ t, date }) => {
+              const label = (
+                <>
+                  <span class="year">{date.getUTCFullYear()}</span>
+                  <span>{t.data.flag} {shortName(t)}</span>
+                </>
+              );
+              return hasDetails(t) ? <a href={url(`/trips/${t.id}`)}>{label}</a> : <div class="timeline-stub">{label}</div>;
+            })
           }
         </div>
       </div>

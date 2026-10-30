@@ -61,6 +61,11 @@ export function hasDetails(t: Trip) {
   return t.data.days.length > 0;
 }
 
+/** One date per visit: the start date, or each recorded visit. */
+export function tripVisits(t: Trip): Date[] {
+  return t.data.startDate ? [t.data.startDate] : visitDates(t);
+}
+
 /** The trip's start date, or its latest visit month. Used for sorting and years. */
 export function tripStart(t: Trip): Date | undefined {
   return t.data.startDate ?? visitDates(t).at(-1);
@@ -84,7 +89,7 @@ export function tripWhen(t: Trip) {
 }
 
 export function shortName(t: Trip) {
-  return t.data.title.split(/\s+—\s+/)[0].replace(/ on a budget$/, '');
+  return t.data.title.split(/\s+—\s+/)[0].replace(/ (on a budget|with family)$/, '');
 }
 
 export function shortYear(t: Trip) {
