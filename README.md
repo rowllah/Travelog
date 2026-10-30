@@ -2,7 +2,7 @@
 
 My travel history in one place: day-by-day itineraries, real budgets (converted live into any currency), and the hotels, restaurants, activities and local operators I'd recommend. Visitors can use any trip as a starting point in the planner.
 
-**Live site:** https://rowllah.github.io/travelog/
+**Live site:** https://rowllah.github.io/Travelog/
 
 ## What's inside
 
@@ -70,7 +70,7 @@ places:
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/travelog/
+npm run dev      # http://localhost:4321/Travelog/
 npm run build    # outputs to dist/
 ```
 

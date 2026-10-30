@@ -40,4 +40,4 @@ After enough trips, the same lessons come up every time. These are the ones that
 
 Passport + copies, cards, some USD/EUR, universal adapter, power bank, sunscreen, swimwear, a bag for wet clothes, mosquito repellent, a small day bag, medicines (band-aids, paracetamol, cetirizine, something for an upset stomach and seasickness), and a pen for immigration forms.
 
-The full interactive version is in the [Toolkit](/travelog/toolkit/).
+The full interactive version is in the [Toolkit](/Travelog/toolkit/).

@@ -4,7 +4,7 @@ export const SITE = {
   title: 'Travelog',
   owner: 'Rowllah',
   tagline: 'Every trip I have taken — itineraries, real budgets and the places worth your time.',
-  github: { user: 'rowllah', repo: 'travelog', branch: 'main' },
+  github: { user: 'rowllah', repo: 'Travelog', branch: 'main' },
 };
 
 export const GITHUB_REPO_URL = `https://github.com/${SITE.github.user}/${SITE.github.repo}`;
