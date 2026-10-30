@@ -52,8 +52,25 @@ const fmtDay = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short'
 const fmtFull = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const fmtWeekday = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
 
+const visitDates = (t: Trip) => t.data.visits.map((v) => new Date(`${v}-01T00:00:00Z`)).sort((a, b) => +a - +b);
+
+/** The trip's start date, or its latest visit month. Used for sorting and years. */
+export function tripStart(t: Trip): Date | undefined {
+  return t.data.startDate ?? visitDates(t).at(-1);
+}
+
+export function tripYears(t: Trip): number[] {
+  if (t.data.startDate) return [t.data.startDate.getUTCFullYear()];
+  return [...new Set(visitDates(t).map((d) => d.getUTCFullYear()))];
+}
+
+export function tripYearLabel(t: Trip, empty = '') {
+  return tripYears(t).join(' & ') || empty;
+}
+
 export function tripWhen(t: Trip) {
   const { startDate, endDate } = t.data;
+  if (!startDate && t.data.visits.length) return visitDates(t).map((d) => fmtMonth.format(d)).join(' & ');
   if (!startDate) return 'Date not recorded';
   if (!endDate) return fmtFull.format(startDate);
   return `${fmtDay.format(startDate)} – ${fmtFull.format(endDate)}`;
@@ -64,11 +81,12 @@ export function shortName(t: Trip) {
 }
 
 export function shortYear(t: Trip) {
-  return t.data.startDate ? `’${String(t.data.startDate.getUTCFullYear()).slice(2)}` : '';
+  return tripYears(t).map((y) => `’${String(y).slice(2)}`).join(' & ');
 }
 
 export function tripMonth(t: Trip) {
-  return t.data.startDate ? fmtMonth.format(t.data.startDate) : 'Anytime';
+  if (t.data.startDate) return fmtMonth.format(t.data.startDate);
+  return t.data.visits.length ? tripWhen(t) : 'Anytime';
 }
 
 export function dayDate(t: Trip, index: number) {
@@ -85,7 +103,7 @@ export function isUpcoming(t: Trip) {
 }
 
 export function sortTrips(trips: Trip[]) {
-  return [...trips].sort((a, b) => (+(b.data.startDate ?? 0)) - (+(a.data.startDate ?? 0)));
+  return [...trips].sort((a, b) => (+(tripStart(b) ?? 0)) - (+(tripStart(a) ?? 0)));
 }
 
 /** Splits a leading "HH:MM" off an itinerary line. */

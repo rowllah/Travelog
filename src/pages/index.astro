@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import TripCard from '../components/TripCard.astro';
-import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate, shortName, shortYear } from '../lib/site';
+import { SITE, url, sortTrips, tripDays, tripMonth, isUpcoming, formatDate, shortName, shortYear, tripYearLabel } from '../lib/site';
 
 const trips = sortTrips(await getCollection('trips'));
 const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
@@ -123,7 +123,7 @@ const diveTrips = trips.filter((t) => t.data.styles.some((s) => ['Diving', 'Snor
             <a class="dive-card" href={url(`/trips/${t.id}`)} style={t.data.cover ? `background-image:url('${t.data.cover}')` : undefined}>
               <span>
                 {t.data.flag} {shortName(t)}
-                <small>{t.data.startDate?.getUTCFullYear() ?? 'Anytime'}</small>
+                <small>{tripYearLabel(t, 'Anytime')}</small>
               </span>
             </a>
           ))
@@ -141,7 +141,7 @@ const diveTrips = trips.filter((t) => t.data.styles.some((s) => ['Diving', 'Snor
           {
             trips.map((t) => (
               <a href={url(`/trips/${t.id}`)}>
-                <span class="year">{t.data.startDate?.getUTCFullYear() ?? '—'}</span>
+                <span class="year">{tripYearLabel(t, '—')}</span>
                 <span>
                   {t.data.flag} <strong>{t.data.title}</strong> <span class="muted">· {tripMonth(t)}</span>
                 </span>

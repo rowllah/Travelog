@@ -1,6 +1,6 @@
 ---
 import Money from './Money.astro';
-import { url, tripDays, tripMonth, perPersonBudget, isUpcoming, type Trip } from '../lib/site';
+import { url, tripDays, tripMonth, perPersonBudget, isUpcoming, tripYears, type Trip } from '../lib/site';
 
 interface Props {
   trip: Trip;
@@ -9,7 +9,7 @@ const { trip } = Astro.props;
 const d = trip.data;
 const days = tripDays(trip);
 const pp = perPersonBudget(trip).map((i) => [i.amount, i.currency] as [number, string]);
-const year = d.startDate ? d.startDate.getUTCFullYear() : '';
+const year = tripYears(trip).join(' ');
 ---
 
 <a
