@@ -1,4 +1,4 @@
-import { convert, formatMoney } from '../lib/fx';
+import { convert, formatMoney, CURRENCIES, currencyForTimezone } from '../lib/fx';
 
 export { convert, formatMoney };
 
@@ -17,7 +17,13 @@ function fallback(): RateState {
 }
 
 export function getCurrency() {
-  return localStorage.getItem(CUR_KEY) || 'INR';
+  const saved = localStorage.getItem(CUR_KEY);
+  if (saved && CURRENCIES.includes(saved)) return saved;
+  try {
+    return currencyForTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone ?? '');
+  } catch {
+    return 'INR';
+  }
 }
 
 export function setCurrency(cur: string) {

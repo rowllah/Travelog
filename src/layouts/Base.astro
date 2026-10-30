@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE, url, GITHUB_REPO_URL } from '../lib/site';
-import { buildRates, CURRENCIES } from '../lib/fx';
+import { buildRates, CURRENCY_GROUPS } from '../lib/fx';
 
 interface Props {
   title?: string;
@@ -62,7 +62,11 @@ const active = (href: string) => (href === '/' ? path === '/' || path.startsWith
           <label class="currency-picker" title="Show all prices in this currency (live rates)">
             <span class="sr-only">Currency</span>
             <select id="currency-select">
-              {CURRENCIES.map((c) => <option value={c}>{c}</option>)}
+              {CURRENCY_GROUPS.map((g) => (
+                <optgroup label={g.label}>
+                  {g.currencies.map(([c, flag]) => <option value={c}>{flag} {c}</option>)}
+                </optgroup>
+              ))}
             </select>
           </label>
         </nav>
